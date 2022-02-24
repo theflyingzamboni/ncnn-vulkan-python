@@ -186,4 +186,4 @@ typedef struct VkPhysicalDeviceMemoryBudgetPropertiesEXT
 } VkPhysicalDeviceMemoryBudgetPropertiesEXT;
 #endif // VK_HEADER_VERSION < 97
 
-#endif // NCNN_VULKAN_HEADER_FIX_H
+_HEADER_FIX_H

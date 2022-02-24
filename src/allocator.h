@@ -24,9 +24,7 @@
 
 #include <stdlib.h>
 
-#if NCNN_VULKAN
 #include <vulkan/vulkan.h>
-#endif // NCNN_VULKAN
 
 #if NCNN_PLATFORM_API
 #if __ANDROID_API__ >= 26
@@ -209,8 +207,6 @@ private:
 private:
     UnlockedPoolAllocatorPrivate* const d;
 };
-
-#if NCNN_VULKAN
 
 class VulkanDevice;
 
@@ -430,8 +426,6 @@ public:
 };
 #endif // __ANDROID_API__ >= 26
 #endif // NCNN_PLATFORM_API
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn
 

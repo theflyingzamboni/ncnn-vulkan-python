@@ -99,7 +99,6 @@ public:
             opt);
     }
 
-#if NCNN_VULKAN
 public:
     virtual int upload_model(ncnn::VkTransfer& cmd, const ncnn::Option& opt)
     {
@@ -155,7 +154,6 @@ public:
             cmd,
             opt);
     }
-#endif // NCNN_VULKAN
 };
 
 #endif

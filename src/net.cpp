@@ -28,10 +28,8 @@
 #include "benchmark.h"
 #endif // NCNN_BENCHMARK
 
-#if NCNN_VULKAN
 #include "command.h"
 #include "pipelinecache.h"
-#endif // NCNN_VULKAN
 
 namespace ncnn {
 
@@ -42,27 +40,20 @@ public:
 
     Option& opt;
 
-#if NCNN_VULKAN
-
     int upload_model();
-
-#endif // NCNN_VULKAN
 
     friend class Extractor;
     int forward_layer(int layer_index, std::vector<Mat>& blob_mats, const Option& opt) const;
 
-#if NCNN_VULKAN
     int forward_layer(int layer_index, std::vector<Mat>& blob_mats, std::vector<VkMat>& blob_mats_gpu, VkCompute& cmd, const Option& opt) const;
     int forward_layer(int layer_index, std::vector<Mat>& blob_mats, std::vector<VkMat>& blob_mats_gpu, std::vector<VkImageMat>& blob_mats_gpu_image, VkCompute& cmd, const Option& opt) const;
-#endif // NCNN_VULKAN
 
     int convert_layout(Mat& bottom_blob, const Layer* layer, const Option& opt) const;
 
     int do_forward_layer(const Layer* layer, std::vector<Mat>& blob_mats, const Option& opt) const;
-#if NCNN_VULKAN
+
     int do_forward_layer(const Layer* layer, std::vector<VkMat>& blob_mats_gpu, VkCompute& cmd, const Option& opt) const;
     int do_forward_layer(const Layer* layer, std::vector<VkImageMat>& blob_mats_gpu_image, VkCompute& cmd, const Option& opt) const;
-#endif // NCNN_VULKAN
 
     void update_input_output_indexes();
 #if NCNN_STRING
@@ -84,14 +75,12 @@ public:
     PoolAllocator* local_blob_allocator;
     PoolAllocator* local_workspace_allocator;
 
-#if NCNN_VULKAN
     const VulkanDevice* vkdev;
 
     VkAllocator* weight_vkallocator;
     VkAllocator* weight_staging_vkallocator;
 
     PipelineCache* pipeline_cache;
-#endif // NCNN_VULKAN
 };
 
 NetPrivate::NetPrivate(Option& _opt)
@@ -100,15 +89,12 @@ NetPrivate::NetPrivate(Option& _opt)
     local_blob_allocator = 0;
     local_workspace_allocator = 0;
 
-#if NCNN_VULKAN
     vkdev = 0;
     weight_vkallocator = 0;
     weight_staging_vkallocator = 0;
     pipeline_cache = 0;
-#endif // NCNN_VULKAN
 }
 
-#if NCNN_VULKAN
 int NetPrivate::upload_model()
 {
     ncnn::VkTransfer cmd(vkdev);
@@ -145,7 +131,6 @@ int NetPrivate::upload_model()
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 int NetPrivate::forward_layer(int layer_index, std::vector<Mat>& blob_mats, const Option& opt) const
 {
@@ -218,7 +203,6 @@ int NetPrivate::forward_layer(int layer_index, std::vector<Mat>& blob_mats, cons
     return 0;
 }
 
-#if NCNN_VULKAN
 int NetPrivate::forward_layer(int layer_index, std::vector<Mat>& blob_mats, std::vector<VkMat>& blob_mats_gpu, VkCompute& cmd, const Option& opt) const
 {
     const Layer* layer = layers[layer_index];
@@ -724,7 +708,6 @@ IMAGE_ALLOCATION_FAILED:
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 int NetPrivate::convert_layout(Mat& bottom_blob, const Layer* layer, const Option& opt) const
 {
@@ -986,7 +969,6 @@ int NetPrivate::do_forward_layer(const Layer* layer, std::vector<Mat>& blob_mats
     return 0;
 }
 
-#if NCNN_VULKAN
 int NetPrivate::do_forward_layer(const Layer* layer, std::vector<VkMat>& blob_mats_gpu, VkCompute& cmd, const Option& opt) const
 {
     if (layer->one_blob_only)
@@ -1237,7 +1219,6 @@ int NetPrivate::do_forward_layer(const Layer* layer, std::vector<VkImageMat>& bl
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 void NetPrivate::update_input_output_indexes()
 {
@@ -1395,7 +1376,6 @@ int Net::load_param(const DataReader& dr)
     d->layers.resize((size_t)layer_count);
     d->blobs.resize((size_t)blob_count);
 
-#if NCNN_VULKAN
     // TODO enable gpu when bf16 conversion implemented
     if (opt.use_bf16_storage)
         opt.use_vulkan_compute = false;
@@ -1424,7 +1404,6 @@ int Net::load_param(const DataReader& dr)
         // fp16a makes no sense when fp16 storage disabled
         if (!opt.use_fp16_storage) opt.use_fp16_arithmetic = false;
     }
-#endif // NCNN_VULKAN
 
     ParamDict pd;
 
@@ -1452,10 +1431,8 @@ int Net::load_param(const DataReader& dr)
             return -1;
         }
 
-#if NCNN_VULKAN
         if (opt.use_vulkan_compute)
             layer->vkdev = d->vkdev;
-#endif // NCNN_VULKAN
 
         layer->type = std::string(layer_type);
         layer->name = std::string(layer_name);
@@ -1608,7 +1585,6 @@ int Net::load_param_bin(const DataReader& dr)
     d->layers.resize(layer_count);
     d->blobs.resize(blob_count);
 
-#if NCNN_VULKAN
     // TODO enable gpu when bf16 conversion implemented
     if (opt.use_bf16_storage)
         opt.use_vulkan_compute = false;
@@ -1637,7 +1613,6 @@ int Net::load_param_bin(const DataReader& dr)
         // fp16a makes no sense when fp16 storage disabled
         if (!opt.use_fp16_storage) opt.use_fp16_arithmetic = false;
     }
-#endif // NCNN_VULKAN
 
     ParamDict pd;
 
@@ -1663,10 +1638,8 @@ int Net::load_param_bin(const DataReader& dr)
             return -1;
         }
 
-#if NCNN_VULKAN
         if (opt.use_vulkan_compute)
             layer->vkdev = d->vkdev;
-#endif // NCNN_VULKAN
 
         //         layer->type = std::string(layer_type);
         //         layer->name = std::string(layer_name);
@@ -1824,7 +1797,6 @@ int Net::load_model(const DataReader& dr)
         }
     }
 
-#if NCNN_VULKAN
     if (opt.use_vulkan_compute)
     {
         if (!opt.pipeline_cache)
@@ -1834,19 +1806,17 @@ int Net::load_model(const DataReader& dr)
             opt.pipeline_cache = d->pipeline_cache;
         }
     }
-#endif // NCNN_VULKAN
 
     for (int i = 0; i < layer_count; i++)
     {
         Layer* layer = d->layers[i];
 
         Option opt1 = opt;
-#if NCNN_VULKAN
+
         if (opt.use_vulkan_compute)
         {
             if (!layer->support_image_storage) opt1.use_image_storage = false;
         }
-#endif // NCNN_VULKAN
 
         int cret = layer->create_pipeline(opt1);
         if (cret != 0)
@@ -1881,12 +1851,10 @@ int Net::load_model(const DataReader& dr)
         }
     }
 
-#if NCNN_VULKAN
     if (opt.use_vulkan_compute)
     {
         d->upload_model();
     }
-#endif // NCNN_VULKAN
 
     return ret;
 }
@@ -2094,7 +2062,6 @@ void Net::clear()
         d->local_workspace_allocator = 0;
     }
 
-#if NCNN_VULKAN
     if (d->weight_vkallocator)
     {
         delete d->weight_vkallocator;
@@ -2111,7 +2078,6 @@ void Net::clear()
         d->pipeline_cache = 0;
         opt.pipeline_cache = 0;
     }
-#endif // NCNN_VULKAN
 }
 
 Extractor Net::create_extractor() const
@@ -2161,7 +2127,6 @@ std::vector<Layer*>& Net::mutable_layers()
     return d->layers;
 }
 
-#if NCNN_VULKAN
 void Net::set_vulkan_device(int device_index)
 {
     d->vkdev = get_gpu_device(device_index);
@@ -2176,7 +2141,6 @@ const VulkanDevice* Net::vulkan_device() const
 {
     return d->vkdev;
 }
-#endif // NCNN_VULKAN
 
 #if NCNN_STRING
 int Net::find_blob_index_by_name(const char* name) const
@@ -2257,13 +2221,11 @@ public:
     std::vector<Mat> blob_mats;
     Option opt;
 
-#if NCNN_VULKAN
     VkAllocator* local_blob_vkallocator;
     VkAllocator* local_staging_vkallocator;
 
     std::vector<VkMat> blob_mats_gpu;
     std::vector<VkImageMat> blob_mats_gpu_image;
-#endif // NCNN_VULKAN
 };
 
 Extractor::Extractor(const Net* _net, size_t blob_count)
@@ -2272,7 +2234,6 @@ Extractor::Extractor(const Net* _net, size_t blob_count)
     d->blob_mats.resize(blob_count);
     d->opt = d->net->opt;
 
-#if NCNN_VULKAN
     if (d->net->opt.use_vulkan_compute)
     {
         d->local_blob_vkallocator = 0;
@@ -2281,7 +2242,6 @@ Extractor::Extractor(const Net* _net, size_t blob_count)
         d->blob_mats_gpu.resize(blob_count);
         d->blob_mats_gpu_image.resize(blob_count);
     }
-#endif // NCNN_VULKAN
 }
 
 Extractor::~Extractor()
@@ -2298,13 +2258,11 @@ Extractor::Extractor(const Extractor& rhs)
     d->blob_mats = rhs.d->blob_mats;
     d->opt = rhs.d->opt;
 
-#if NCNN_VULKAN
     d->local_blob_vkallocator = 0;
     d->local_staging_vkallocator = 0;
 
     d->blob_mats_gpu = rhs.d->blob_mats_gpu;
     d->blob_mats_gpu_image = rhs.d->blob_mats_gpu_image;
-#endif // NCNN_VULKAN
 }
 
 Extractor& Extractor::operator=(const Extractor& rhs)
@@ -2316,13 +2274,11 @@ Extractor& Extractor::operator=(const Extractor& rhs)
     d->blob_mats = rhs.d->blob_mats;
     d->opt = rhs.d->opt;
 
-#if NCNN_VULKAN
     d->local_blob_vkallocator = 0;
     d->local_staging_vkallocator = 0;
 
     d->blob_mats_gpu = rhs.d->blob_mats_gpu;
     d->blob_mats_gpu_image = rhs.d->blob_mats_gpu_image;
-#endif // NCNN_VULKAN
 
     return *this;
 }
@@ -2331,7 +2287,6 @@ void Extractor::clear()
 {
     d->blob_mats.clear();
 
-#if NCNN_VULKAN
     if (d->opt.use_vulkan_compute)
     {
         d->blob_mats_gpu.clear();
@@ -2346,7 +2301,6 @@ void Extractor::clear()
             d->net->vulkan_device()->reclaim_staging_allocator(d->local_staging_vkallocator);
         }
     }
-#endif // NCNN_VULKAN
 }
 
 void Extractor::set_light_mode(bool enable)
@@ -2369,7 +2323,6 @@ void Extractor::set_workspace_allocator(Allocator* allocator)
     d->opt.workspace_allocator = allocator;
 }
 
-#if NCNN_VULKAN
 void Extractor::set_vulkan_compute(bool enable)
 {
     if (d->net->d->opt.use_vulkan_compute)
@@ -2396,7 +2349,6 @@ void Extractor::set_staging_vkallocator(VkAllocator* allocator)
 {
     d->opt.staging_vkallocator = allocator;
 }
-#endif // NCNN_VULKAN
 
 #if NCNN_STRING
 int Extractor::input(const char* blob_name, const Mat& in)
@@ -2476,7 +2428,6 @@ int Extractor::extract(int blob_index, Mat& feat, int type)
             }
         }
 
-#if NCNN_VULKAN
         if (d->opt.use_vulkan_compute)
         {
             // use local allocator
@@ -2562,7 +2513,6 @@ int Extractor::extract(int blob_index, Mat& feat, int type)
         }
 #else
         ret = d->net->d->forward_layer(layer_index, d->blob_mats, d->opt);
-#endif // NCNN_VULKAN
     }
 
     feat = d->blob_mats[blob_index];
@@ -2622,7 +2572,6 @@ int Extractor::extract(int blob_index, Mat& feat, int type)
     return ret;
 }
 
-#if NCNN_VULKAN
 #if NCNN_STRING
 int Extractor::input(const char* blob_name, const VkMat& in)
 {
@@ -2802,6 +2751,5 @@ int Extractor::extract(int blob_index, VkImageMat& feat, VkCompute& cmd)
 
     return ret;
 }
-#endif // NCNN_VULKAN
 
 } // namespace ncnn

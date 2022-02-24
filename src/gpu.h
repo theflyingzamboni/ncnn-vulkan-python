@@ -17,8 +17,6 @@
 
 #include "platform.h"
 
-#if NCNN_VULKAN
-
 #include "mat.h"
 
 #include <vulkan/vulkan.h>
@@ -345,7 +343,5 @@ public:
 NCNN_EXPORT int resolve_shader_info(const uint32_t* spv_data, size_t spv_data_size, ShaderInfo& shader_info);
 
 } // namespace ncnn
-
-#endif // NCNN_VULKAN
 
 #endif // NCNN_GPU_H

@@ -54,11 +54,9 @@ static bool g_enable_cooling_down = true;
 static ncnn::UnlockedPoolAllocator g_blob_pool_allocator;
 static ncnn::PoolAllocator g_workspace_pool_allocator;
 
-#if NCNN_VULKAN
 static ncnn::VulkanDevice* g_vkdev = 0;
 static ncnn::VkAllocator* g_blob_vkallocator = 0;
 static ncnn::VkAllocator* g_staging_vkallocator = 0;
-#endif // NCNN_VULKAN
 
 void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& opt)
 {
@@ -68,24 +66,20 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     g_blob_pool_allocator.clear();
     g_workspace_pool_allocator.clear();
 
-#if NCNN_VULKAN
     if (opt.use_vulkan_compute)
     {
         g_blob_vkallocator->clear();
         g_staging_vkallocator->clear();
     }
-#endif // NCNN_VULKAN
 
     ncnn::Net net;
 
     net.opt = opt;
 
-#if NCNN_VULKAN
     if (net.opt.use_vulkan_compute)
     {
         net.set_vulkan_device(g_vkdev);
     }
-#endif // NCNN_VULKAN
 
 #ifdef __EMSCRIPTEN__
 #define MODEL_DIR "/working/"
@@ -202,7 +196,6 @@ int main(int argc, char** argv)
     g_blob_pool_allocator.set_size_compare_ratio(0.0f);
     g_workspace_pool_allocator.set_size_compare_ratio(0.5f);
 
-#if NCNN_VULKAN
     if (use_vulkan_compute)
     {
         g_warmup_loop_count = 10;
@@ -212,7 +205,6 @@ int main(int argc, char** argv)
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
         g_staging_vkallocator = new ncnn::VkStagingAllocator(g_vkdev);
     }
-#endif // NCNN_VULKAN
 
     // default option
     ncnn::Option opt;
@@ -220,11 +212,11 @@ int main(int argc, char** argv)
     opt.num_threads = num_threads;
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
-#if NCNN_VULKAN
+
     opt.blob_vkallocator = g_blob_vkallocator;
     opt.workspace_vkallocator = g_blob_vkallocator;
     opt.staging_vkallocator = g_staging_vkallocator;
-#endif // NCNN_VULKAN
+
     opt.use_winograd_convolution = true;
     opt.use_sgemm_convolution = true;
     opt.use_int8_inference = true;
@@ -318,10 +310,8 @@ int main(int argc, char** argv)
 
     benchmark("yolo-fastestv2", ncnn::Mat(352, 352, 3), opt);
 
-#if NCNN_VULKAN
     delete g_blob_vkallocator;
     delete g_staging_vkallocator;
-#endif // NCNN_VULKAN
 
     return 0;
 }

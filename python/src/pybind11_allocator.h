@@ -48,7 +48,6 @@ public:
     }
 };
 
-#if NCNN_VULKAN
 template<class Base = ncnn::VkAllocator>
 class PyVkAllocator : public Base
 {
@@ -132,6 +131,5 @@ public:
 //        PYBIND11_OVERLOAD(void, Other, fastFree, ptr);
 //    }
 //};
-#endif // NCNN_VULKAN
 
 #endif

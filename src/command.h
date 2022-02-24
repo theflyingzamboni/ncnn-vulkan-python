@@ -17,8 +17,6 @@
 
 #include "platform.h"
 
-#if NCNN_VULKAN
-
 #include "mat.h"
 
 #include <vulkan/vulkan.h>
@@ -130,7 +128,5 @@ private:
 };
 
 } // namespace ncnn
-
-#endif // NCNN_VULKAN
 
 #endif // NCNN_COMMAND_H

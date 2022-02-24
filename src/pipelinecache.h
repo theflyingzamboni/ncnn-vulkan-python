@@ -17,16 +17,12 @@
 
 #include "platform.h"
 
-#if NCNN_VULKAN
 #include <vulkan/vulkan.h>
-#endif // NCNN_VULKAN
 
 #include "mat.h"
 #include "gpu.h"
 
 namespace ncnn {
-
-#if NCNN_VULKAN
 
 class VulkanDevice;
 class PipelineCachePrivate;
@@ -77,8 +73,6 @@ private:
 private:
     PipelineCachePrivate* const d;
 };
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn
 

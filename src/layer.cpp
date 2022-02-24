@@ -54,9 +54,7 @@ Layer::Layer()
 
     typeindex = -1;
 
-#if NCNN_VULKAN
     vkdev = 0;
-#endif // NCNN_VULKAN
 
     userdata = 0;
 }
@@ -123,7 +121,6 @@ int Layer::forward_inplace(Mat& /*bottom_top_blob*/, const Option& /*opt*/) cons
     return -1;
 }
 
-#if NCNN_VULKAN
 int Layer::upload_model(VkTransfer& /*cmd*/, const Option& /*opt*/)
 {
     return 0;
@@ -196,7 +193,6 @@ int Layer::forward_inplace(VkImageMat& /*bottom_top_blob*/, VkCompute& /*cmd*/, 
 {
     return -1;
 }
-#endif // NCNN_VULKAN
 
 #include "layer_registry.h"
 

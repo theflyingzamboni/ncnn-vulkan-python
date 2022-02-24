@@ -17,15 +17,13 @@
 
 #include "mat.h"
 #include "platform.h"
-#if NCNN_VULKAN
+
 #include "gpu.h"
 
 #include <vulkan/vulkan.h>
-#endif // NCNN_VULKAN
 
 namespace ncnn {
 
-#if NCNN_VULKAN
 class Option;
 class PipelinePrivate;
 class NCNN_EXPORT Pipeline
@@ -105,8 +103,6 @@ public:
 };
 #endif // __ANDROID_API__ >= 26
 #endif // NCNN_PLATFORM_API
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn
 

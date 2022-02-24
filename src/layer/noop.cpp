@@ -32,7 +32,6 @@ int Noop::forward_inplace(std::vector<Mat>& /*bottom_top_blobs*/, const Option& 
     return 0;
 }
 
-#if NCNN_VULKAN
 int Noop::forward_inplace(std::vector<VkMat>& /*bottom_top_blobs*/, VkCompute& /*cmd*/, const Option& /*opt*/) const
 {
     return 0;
@@ -42,6 +41,5 @@ int Noop::forward_inplace(std::vector<VkImageMat>& /*bottom_top_blobs*/, VkCompu
 {
     return 0;
 }
-#endif // NCNN_VULKAN
 
 } // namespace ncnn

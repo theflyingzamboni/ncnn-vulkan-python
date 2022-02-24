@@ -14,8 +14,6 @@
 
 #include "command.h"
 
-#if NCNN_VULKAN
-
 #include "option.h"
 #include "pipeline.h"
 
@@ -405,7 +403,8 @@ void VkCompute::record_upload(const Mat& src, VkMat& dst, const Option& opt)
 
     int dst_elempack = 1;
     if (opt.use_shader_pack8)
-        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4 : 1;
+        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4
+                                                                   : 1;
     else
         dst_elempack = elemcount % 4 == 0 ? 4 : 1;
 
@@ -461,7 +460,8 @@ void VkCompute::record_upload(const Mat& src, VkImageMat& dst, const Option& opt
 
     int dst_elempack = 1;
     if (opt.use_shader_pack8)
-        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4 : 1;
+        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4
+                                                                   : 1;
     else
         dst_elempack = elemcount % 4 == 0 ? 4 : 1;
 
@@ -776,7 +776,8 @@ void VkCompute::record_buffer_to_image(const VkMat& src, VkImageMat& dst, const 
 
     int dst_elempack = 1;
     if (opt.use_shader_pack8)
-        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4 : 1;
+        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4
+                                                                   : 1;
     else
         dst_elempack = elemcount % 4 == 0 ? 4 : 1;
 
@@ -813,7 +814,8 @@ void VkCompute::record_image_to_buffer(const VkImageMat& src, VkMat& dst, const 
 
     int dst_elempack = 1;
     if (opt.use_shader_pack8)
-        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4 : 1;
+        dst_elempack = elemcount % 8 == 0 ? 8 : elemcount % 4 == 0 ? 4
+                                                                   : 1;
     else
         dst_elempack = elemcount % 4 == 0 ? 4 : 1;
 
@@ -3494,5 +3496,3 @@ int VkTransfer::submit_and_wait()
 }
 
 } // namespace ncnn
-
-#endif // NCNN_VULKAN

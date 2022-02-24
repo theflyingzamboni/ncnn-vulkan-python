@@ -1,11 +1,11 @@
 import io
 import os
-import sys
-import time
 import re
 import subprocess
+import sys
+import time
 
-from setuptools import setup, find_packages, Extension
+from setuptools import Extension, find_packages, setup
 from setuptools.command.build_ext import build_ext
 
 
@@ -37,6 +37,8 @@ PLAT_TO_CMAKE = {
 # A CMakeExtension needs a sourcedir instead of a file list.
 # The name must be the _single_ output extension from the CMake build.
 # If you need multiple extensions, see scikit-build.
+
+
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=""):
         Extension.__init__(self, name, sources=[])
@@ -45,7 +47,8 @@ class CMakeExtension(Extension):
 
 class CMakeBuild(build_ext):
     def build_extension(self, ext):
-        extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+        extdir = os.path.abspath(os.path.dirname(
+            self.get_ext_fullpath(ext.name)))
         extdir = os.path.join(extdir, "ncnn")
 
         # required for auto-detection of auxiliary "native" libs
@@ -65,17 +68,20 @@ class CMakeBuild(build_ext):
             "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}".format(extdir),
             "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE={}".format(extdir),
             "-DPYTHON_EXECUTABLE={}".format(sys.executable),
-            "-DCMAKE_BUILD_TYPE={}".format(cfg),  # not used on MSVC, but no harm
+            # not used on MSVC, but no harm
+            "-DCMAKE_BUILD_TYPE={}".format(cfg),
             "-DNCNN_PYTHON=ON",
             "-DNCNN_BUILD_BENCHMARK=OFF",
             "-DNCNN_BUILD_EXAMPLES=OFF",
             "-DNCNN_BUILD_TOOLS=OFF",
+            "-DNCNN_VULKAN=ON",
         ]
         build_args = []
 
         if self.compiler.compiler_type == "msvc":
             # Single config generators are handled "normally"
-            single_config = any(x in cmake_generator for x in {"NMake", "Ninja"})
+            single_config = any(
+                x in cmake_generator for x in {"NMake", "Ninja"})
 
             # CMake allows an arch-in-generator style for backward compatibility
             contains_arch = any(x in cmake_generator for x in {"ARM", "Win64"})
@@ -89,7 +95,8 @@ class CMakeBuild(build_ext):
             # Multi-config generators have a different way to specify configs
             if not single_config:
                 cmake_args += [
-                    "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(cfg.upper(), extdir)
+                    "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}".format(
+                        cfg.upper(), extdir)
                 ]
                 build_args += ["--config", cfg]
 

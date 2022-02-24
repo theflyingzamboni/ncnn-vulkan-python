@@ -27,7 +27,6 @@
 
 namespace ncnn {
 
-#if NCNN_VULKAN
 class PipelinePrivate
 {
 public:
@@ -461,7 +460,5 @@ int ImportAndroidHardwareBufferPipeline::create_descriptorset_layout()
 }
 #endif // __ANDROID_API__ >= 26
 #endif // NCNN_PLATFORM_API
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn

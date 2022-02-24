@@ -14,8 +14,6 @@
 
 #include "gpu.h"
 
-#if NCNN_VULKAN
-
 #include <math.h>
 #include <string.h>
 #include <vulkan/vulkan.h>
@@ -689,7 +687,7 @@ static uint32_t find_device_compute_queue(const std::vector<VkQueueFamilyPropert
         const VkQueueFamilyProperties& queueFamilyProperty = queueFamilyProperties[i];
 
         if ((queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
-                && !(queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
+            && !(queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
         {
             return i;
         }
@@ -701,7 +699,7 @@ static uint32_t find_device_compute_queue(const std::vector<VkQueueFamilyPropert
         const VkQueueFamilyProperties& queueFamilyProperty = queueFamilyProperties[i];
 
         if ((queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
-                && (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
+            && (queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
         {
             return i;
         }
@@ -730,7 +728,7 @@ static uint32_t find_device_graphics_queue(const std::vector<VkQueueFamilyProper
         const VkQueueFamilyProperties& queueFamilyProperty = queueFamilyProperties[i];
 
         if ((queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-                && !(queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT))
+            && !(queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT))
         {
             return i;
         }
@@ -742,7 +740,7 @@ static uint32_t find_device_graphics_queue(const std::vector<VkQueueFamilyProper
         const VkQueueFamilyProperties& queueFamilyProperty = queueFamilyProperties[i];
 
         if ((queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-                && (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT))
+            && (queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT))
         {
             return i;
         }
@@ -771,8 +769,8 @@ static uint32_t find_device_transfer_queue(const std::vector<VkQueueFamilyProper
         const VkQueueFamilyProperties& queueFamilyProperty = queueFamilyProperties[i];
 
         if ((queueFamilyProperty.queueFlags & VK_QUEUE_TRANSFER_BIT)
-                && !(queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
-                && !(queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
+            && !(queueFamilyProperty.queueFlags & VK_QUEUE_COMPUTE_BIT)
+            && !(queueFamilyProperty.queueFlags & VK_QUEUE_GRAPHICS_BIT))
         {
             return i;
         }
@@ -1100,13 +1098,13 @@ int create_gpu_instance()
         }
 
         if (physicalDeviceProperties.vendorID == 0x13b5
-                && (physicalDeviceProperties.deviceID == 0x7500001
-                    || physicalDeviceProperties.deviceID == 0x8602000
-                    || physicalDeviceProperties.deviceID == 0x8800020
-                    || physicalDeviceProperties.deviceID == 0x70901010
-                    || physicalDeviceProperties.deviceID == 0x74021000
-                    || physicalDeviceProperties.deviceID == 0x60a00002
-                    || physicalDeviceProperties.deviceID == 0x62210001))
+            && (physicalDeviceProperties.deviceID == 0x7500001
+                || physicalDeviceProperties.deviceID == 0x8602000
+                || physicalDeviceProperties.deviceID == 0x8800020
+                || physicalDeviceProperties.deviceID == 0x70901010
+                || physicalDeviceProperties.deviceID == 0x74021000
+                || physicalDeviceProperties.deviceID == 0x60a00002
+                || physicalDeviceProperties.deviceID == 0x62210001))
         {
             // NOTE rk3288/rk3399/t880/g51/g52/g71/g72
             // however, g76/g77 has explicit fp16 arithmetic
@@ -1115,9 +1113,9 @@ int create_gpu_instance()
         }
 
         if (physicalDeviceProperties.vendorID == 0x5143
-                && (physicalDeviceProperties.deviceID == 0x6030001
-                    || physicalDeviceProperties.deviceID == 0x6040001
-                    || physicalDeviceProperties.deviceID == 0x6050002))
+            && (physicalDeviceProperties.deviceID == 0x6030001
+                || physicalDeviceProperties.deviceID == 0x6040001
+                || physicalDeviceProperties.deviceID == 0x6050002))
         {
             // TODO enable devices other than qcom845/qcom855/qcom855plus/qcom865
             // qcom adreno driver accept spirv with fp16 arithmetic
@@ -1730,8 +1728,9 @@ const ncnn::Packing_vulkan* VulkanDevicePrivate::get_utility_operator(int storag
     uop->vkdev = vkdev;
 
     ncnn::ParamDict pd;
-    pd.set(0, packing_type_to_index == 0 ? 1 : packing_type_to_index == 1 ? 4 : 8); // out_elempack
-    pd.set(2, cast_type_from_index + 1);                                            // 0=auto 1=fp32 2=fp16p 3=fp16s
+    pd.set(0, packing_type_to_index == 0 ? 1 : packing_type_to_index == 1 ? 4
+                                                                          : 8); // out_elempack
+    pd.set(2, cast_type_from_index + 1);                                        // 0=auto 1=fp32 2=fp16p 3=fp16s
     pd.set(3, cast_type_to_index + 1);
     pd.set(4, storage_type_from); // 0=buffer 1=image
     pd.set(5, storage_type_to);
@@ -2453,8 +2452,8 @@ uint32_t VulkanDevice::find_memory_index(uint32_t memory_type_bits, VkFlags requ
         {
             const VkMemoryType& memoryType = memory_properties.memoryTypes[i];
             if ((memoryType.propertyFlags & required) == required
-                    && (preferred && (memoryType.propertyFlags & preferred))
-                    && (preferred_not && !(memoryType.propertyFlags & preferred_not)))
+                && (preferred && (memoryType.propertyFlags & preferred))
+                && (preferred_not && !(memoryType.propertyFlags & preferred_not)))
             {
                 return i;
             }
@@ -2469,7 +2468,7 @@ uint32_t VulkanDevice::find_memory_index(uint32_t memory_type_bits, VkFlags requ
         {
             const VkMemoryType& memoryType = memory_properties.memoryTypes[i];
             if ((memoryType.propertyFlags & required) == required
-                    && (preferred && (memoryType.propertyFlags & preferred)))
+                && (preferred && (memoryType.propertyFlags & preferred)))
             {
                 return i;
             }
@@ -2484,7 +2483,7 @@ uint32_t VulkanDevice::find_memory_index(uint32_t memory_type_bits, VkFlags requ
         {
             const VkMemoryType& memoryType = memory_properties.memoryTypes[i];
             if ((memoryType.propertyFlags & required) == required
-                    && (preferred_not && !(memoryType.propertyFlags & preferred_not)))
+                && (preferred_not && !(memoryType.propertyFlags & preferred_not)))
             {
                 return i;
             }
@@ -2526,26 +2525,26 @@ bool VulkanDevice::is_coherent(uint32_t memory_type_index) const
 VkQueue VulkanDevice::acquire_queue(uint32_t queue_family_index) const
 {
     if (queue_family_index != info.compute_queue_family_index()
-            && queue_family_index != info.graphics_queue_family_index()
-            && queue_family_index != info.transfer_queue_family_index())
+        && queue_family_index != info.graphics_queue_family_index()
+        && queue_family_index != info.transfer_queue_family_index())
     {
         NCNN_LOGE("invalid queue_family_index %u", queue_family_index);
         return 0;
     }
 
-    Mutex& queue_lock = queue_family_index == info.compute_queue_family_index() ? d->compute_queue_lock
+    Mutex& queue_lock = queue_family_index == info.compute_queue_family_index()    ? d->compute_queue_lock
                         : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queue_lock
-                        : d->transfer_queue_lock;
+                                                                                   : d->transfer_queue_lock;
 
     queue_lock.lock();
 
-    ConditionVariable& queue_condition = queue_family_index == info.compute_queue_family_index() ? d->compute_queue_condition
+    ConditionVariable& queue_condition = queue_family_index == info.compute_queue_family_index()    ? d->compute_queue_condition
                                          : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queue_condition
-                                         : d->transfer_queue_condition;
+                                                                                                    : d->transfer_queue_condition;
 
-    int& free_queue_count = queue_family_index == info.compute_queue_family_index() ? d->free_compute_queue_count
+    int& free_queue_count = queue_family_index == info.compute_queue_family_index()    ? d->free_compute_queue_count
                             : queue_family_index == info.graphics_queue_family_index() ? d->free_graphics_queue_count
-                            : d->free_transfer_queue_count;
+                                                                                       : d->free_transfer_queue_count;
 
     while (free_queue_count == 0)
     {
@@ -2553,9 +2552,9 @@ VkQueue VulkanDevice::acquire_queue(uint32_t queue_family_index) const
         queue_condition.wait(queue_lock);
     }
 
-    std::vector<VkQueue>& queues = queue_family_index == info.compute_queue_family_index() ? d->compute_queues
+    std::vector<VkQueue>& queues = queue_family_index == info.compute_queue_family_index()    ? d->compute_queues
                                    : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queues
-                                   : d->transfer_queues;
+                                                                                              : d->transfer_queues;
 
     VkQueue queue = 0;
     for (size_t i = 0; i < queues.size(); i++)
@@ -2585,30 +2584,30 @@ VkQueue VulkanDevice::acquire_queue(uint32_t queue_family_index) const
 void VulkanDevice::reclaim_queue(uint32_t queue_family_index, VkQueue queue) const
 {
     if (queue_family_index != info.compute_queue_family_index()
-            && queue_family_index != info.graphics_queue_family_index()
-            && queue_family_index != info.transfer_queue_family_index())
+        && queue_family_index != info.graphics_queue_family_index()
+        && queue_family_index != info.transfer_queue_family_index())
     {
         NCNN_LOGE("invalid queue_family_index %u", queue_family_index);
         return;
     }
 
-    Mutex& queue_lock = queue_family_index == info.compute_queue_family_index() ? d->compute_queue_lock
+    Mutex& queue_lock = queue_family_index == info.compute_queue_family_index()    ? d->compute_queue_lock
                         : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queue_lock
-                        : d->transfer_queue_lock;
+                                                                                   : d->transfer_queue_lock;
 
     queue_lock.lock();
 
-    ConditionVariable& queue_condition = queue_family_index == info.compute_queue_family_index() ? d->compute_queue_condition
+    ConditionVariable& queue_condition = queue_family_index == info.compute_queue_family_index()    ? d->compute_queue_condition
                                          : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queue_condition
-                                         : d->transfer_queue_condition;
+                                                                                                    : d->transfer_queue_condition;
 
-    int& free_queue_count = queue_family_index == info.compute_queue_family_index() ? d->free_compute_queue_count
+    int& free_queue_count = queue_family_index == info.compute_queue_family_index()    ? d->free_compute_queue_count
                             : queue_family_index == info.graphics_queue_family_index() ? d->free_graphics_queue_count
-                            : d->free_transfer_queue_count;
+                                                                                       : d->free_transfer_queue_count;
 
-    std::vector<VkQueue>& queues = queue_family_index == info.compute_queue_family_index() ? d->compute_queues
+    std::vector<VkQueue>& queues = queue_family_index == info.compute_queue_family_index()    ? d->compute_queues
                                    : queue_family_index == info.graphics_queue_family_index() ? d->graphics_queues
-                                   : d->transfer_queues;
+                                                                                              : d->transfer_queues;
 
     size_t i = 0;
     for (; i < queues.size(); i++)
@@ -2821,8 +2820,10 @@ void VulkanDevice::convert_packing(const VkMat& src, VkMat& dst, int dst_elempac
     Option opt = _opt;
     opt.use_image_storage = false;
 
-    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1 : 0;
-    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1 : 2;
+    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1
+                                                                            : 0;
+    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1
+                                                                          : 2;
 
     int cast_type_from_index;
     if (src.elembits() == 32)
@@ -2853,8 +2854,10 @@ void VulkanDevice::convert_packing(const VkMat& src, VkMat& dst, int dst_elempac
 
 void VulkanDevice::convert_packing(const VkImageMat& src, VkImageMat& dst, int dst_elempack, VkCompute& cmd, const Option& opt) const
 {
-    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1 : 0;
-    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1 : 2;
+    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1
+                                                                            : 0;
+    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1
+                                                                          : 2;
 
     int cast_type_from_index;
     if (src.elembits() == 32)
@@ -2885,8 +2888,10 @@ void VulkanDevice::convert_packing(const VkImageMat& src, VkImageMat& dst, int d
 
 void VulkanDevice::convert_packing(const VkMat& src, VkImageMat& dst, int dst_elempack, VkCompute& cmd, const Option& opt) const
 {
-    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1 : 0;
-    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1 : 2;
+    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1
+                                                                            : 0;
+    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1
+                                                                          : 2;
 
     int cast_type_from_index;
     if (src.elembits() == 32)
@@ -2917,8 +2922,10 @@ void VulkanDevice::convert_packing(const VkMat& src, VkImageMat& dst, int dst_el
 
 void VulkanDevice::convert_packing(const VkImageMat& src, VkMat& dst, int dst_elempack, VkCompute& cmd, const Option& opt) const
 {
-    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1 : 0;
-    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1 : 2;
+    int cast_type_to_index = opt.use_fp16_storage ? 2 : opt.use_fp16_packed ? 1
+                                                                            : 0;
+    int packing_type_to_index = dst_elempack == 1 ? 0 : dst_elempack == 4 ? 1
+                                                                          : 2;
 
     int cast_type_from_index;
     if (src.elembits() == 32)
@@ -3761,5 +3768,3 @@ int resolve_shader_info(const uint32_t* spv_data, size_t spv_data_size, ShaderIn
 }
 
 } // namespace ncnn
-
-#endif // NCNN_VULKAN

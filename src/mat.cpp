@@ -23,13 +23,11 @@
 
 #include <math.h>
 
-#if NCNN_VULKAN
 #if NCNN_PLATFORM_API
 #if __ANDROID_API__ >= 26
 #include <android/hardware_buffer.h>
 #endif // __ANDROID_API__ >= 26
 #endif // NCNN_PLATFORM_API
-#endif // NCNN_VULKAN
 
 namespace ncnn {
 
@@ -486,7 +484,6 @@ void Mat::create_like(const Mat& m, Allocator* _allocator)
         create(m.w, m.h, m.d, m.c, m.elemsize, m.elempack, _allocator);
 }
 
-#if NCNN_VULKAN
 void Mat::create_like(const VkMat& m, Allocator* _allocator)
 {
     int _dims = m.dims;
@@ -512,9 +509,7 @@ void Mat::create_like(const VkImageMat& im, Allocator* _allocator)
     if (_dims == 4)
         create(im.w, im.h, im.d, im.c, im.elemsize, im.elempack, _allocator);
 }
-#endif // NCNN_VULKAN
 
-#if NCNN_VULKAN
 void VkMat::create(int _w, size_t _elemsize, VkAllocator* _allocator)
 {
     if (dims == 1 && w == _w && elemsize == _elemsize && elempack == 1 && allocator == _allocator)
@@ -1058,7 +1053,6 @@ void VkImageMat::create_like(const VkImageMat& im, VkAllocator* _allocator)
     if (_dims == 4)
         create(im.w, im.h, im.d, im.c, im.elemsize, im.elempack, _allocator);
 }
-#endif // NCNN_VULKAN
 
 void Mat::substract_mean_normalize(const float* mean_vals, const float* norm_vals)
 {
@@ -1168,11 +1162,11 @@ Mat Mat::from_float16(const unsigned short* data, int size)
             "st1    {v1.4s}, [%2], #16      \n"
             "bne    0b                      \n"
             : "=r"(nn),   // %0
-            "=r"(data), // %1
-            "=r"(ptr)   // %2
+              "=r"(data), // %1
+              "=r"(ptr)   // %2
             : "0"(nn),
-            "1"(data),
-            "2"(ptr)
+              "1"(data),
+              "2"(ptr)
             : "cc", "memory", "v0", "v1");
     }
 #else
@@ -1187,11 +1181,11 @@ Mat Mat::from_float16(const unsigned short* data, int size)
             "vst1.f32   {d2-d3}, [%2 :128]! \n"
             "bne        0b                  \n"
             : "=r"(nn),   // %0
-            "=r"(data), // %1
-            "=r"(ptr)   // %2
+              "=r"(data), // %1
+              "=r"(ptr)   // %2
             : "0"(nn),
-            "1"(data),
-            "2"(ptr)
+              "1"(data),
+              "2"(ptr)
             : "cc", "memory", "q0", "q1");
     }
 #endif // __aarch64__
@@ -1207,7 +1201,6 @@ Mat Mat::from_float16(const unsigned short* data, int size)
     return m;
 }
 
-#if NCNN_VULKAN
 #if NCNN_PLATFORM_API
 #if __ANDROID_API__ >= 26
 VkImageMat VkImageMat::from_android_hardware_buffer(VkAndroidHardwareBufferImageAllocator* allocator)
@@ -1219,7 +1212,6 @@ VkImageMat VkImageMat::from_android_hardware_buffer(VkAndroidHardwareBufferImage
 }
 #endif // __ANDROID_API__ >= 26
 #endif // NCNN_PLATFORM_API
-#endif // NCNN_VULKAN
 
 unsigned short float32_to_float16(float value)
 {

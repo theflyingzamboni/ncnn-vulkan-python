@@ -23,12 +23,10 @@
 
 #include <math.h>
 
-#if NCNN_VULKAN
 #include "command.h"
 #include "pipeline.h"
 
 #include <vulkan/vulkan.h>
-#endif // NCNN_VULKAN
 
 namespace ncnn {
 
@@ -112,7 +110,6 @@ public:
     virtual int forward_inplace(std::vector<Mat>& bottom_top_blobs, const Option& opt) const;
     virtual int forward_inplace(Mat& bottom_top_blob, const Option& opt) const;
 
-#if NCNN_VULKAN
 public:
     // upload weight blob from host to device
     virtual int upload_model(VkTransfer& cmd, const Option& opt);
@@ -141,7 +138,6 @@ public:
 public:
     // assigned immediately after creating this layer
     const VulkanDevice* vkdev;
-#endif // NCNN_VULKAN
 
 public:
     // custom user data

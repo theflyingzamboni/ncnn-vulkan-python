@@ -39,7 +39,6 @@ int Split::forward(const std::vector<Mat>& bottom_blobs, std::vector<Mat>& top_b
     return 0;
 }
 
-#if NCNN_VULKAN
 int Split::forward(const std::vector<VkMat>& bottom_blobs, std::vector<VkMat>& top_blobs, VkCompute& /*cmd*/, const Option& /*opt*/) const
 {
     const VkMat& bottom_blob = bottom_blobs[0];
@@ -61,6 +60,5 @@ int Split::forward(const std::vector<VkImageMat>& bottom_blobs, std::vector<VkIm
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 } // namespace ncnn

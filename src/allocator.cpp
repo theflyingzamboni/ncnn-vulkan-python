@@ -291,7 +291,6 @@ void UnlockedPoolAllocator::fastFree(void* ptr)
     ncnn::fastFree(ptr);
 }
 
-#if NCNN_VULKAN
 VkAllocator::VkAllocator(const VulkanDevice* _vkdev)
     : vkdev(_vkdev)
 {
@@ -2034,7 +2033,5 @@ uint64_t VkAndroidHardwareBufferImageAllocator::external_format() const
     return bufferFormatProperties.externalFormat;
 }
 #endif // __ANDROID_API__ >= 26
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn

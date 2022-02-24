@@ -165,17 +165,15 @@ void ncnn_option_set_num_threads(ncnn_option_t opt, int num_threads)
 
 int ncnn_option_get_use_vulkan_compute(const ncnn_option_t opt)
 {
-#if NCNN_VULKAN
     return ((const Option*)opt)->use_vulkan_compute;
 #else
-    (void)opt;
-    return 0;
+(void)opt;
+return 0;
 #endif
 }
 
 void ncnn_option_set_use_vulkan_compute(ncnn_option_t opt, int use_vulkan_compute)
 {
-#if NCNN_VULKAN
     ((Option*)opt)->use_vulkan_compute = use_vulkan_compute;
 #else
     (void)opt;
@@ -1324,7 +1322,7 @@ void ncnn_extractor_destroy(ncnn_extractor_t ex)
 void ncnn_extractor_set_option(ncnn_extractor_t ex, const ncnn_option_t opt)
 {
     ((Extractor*)ex)->set_num_threads(((const Option*)opt)->num_threads);
-#if NCNN_VULKAN
+
     ((Extractor*)ex)->set_vulkan_compute(((const Option*)opt)->use_vulkan_compute);
 #endif
 }

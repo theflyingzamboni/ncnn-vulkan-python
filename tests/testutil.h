@@ -24,13 +24,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if NCNN_VULKAN
 #include "command.h"
 #include "gpu.h"
-#endif // NCNN_VULKAN
 
 static struct prng_rand_t g_prng_rand_state;
-#if NCNN_VULKAN
+
 class GlobalGpuInstance
 {
 public:
@@ -48,10 +46,6 @@ public:
     GlobalGpuInstance __ncnn_gpu_instance_guard; \
     prng_srand(seed, &g_prng_rand_state)
 #define RAND() prng_rand(&g_prng_rand_state)
-#else // NCNN_VULKAN
-#define SRAND(seed) prng_srand(seed, &g_prng_rand_state)
-#define RAND()      prng_rand(&g_prng_rand_state)
-#endif // NCNN_VULKAN
 
 #define TEST_LAYER_DISABLE_AUTO_INPUT_PACKING (1 << 0)
 #define TEST_LAYER_DISABLE_AUTO_INPUT_CASTING (1 << 1)
@@ -554,7 +548,6 @@ int test_layer_cpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<n
     return 0;
 }
 
-#if NCNN_VULKAN
 template<typename T>
 int test_layer_gpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn::Mat>& weights, const ncnn::Option& _opt, const std::vector<ncnn::Mat>& a, int top_blob_count, std::vector<ncnn::Mat>& d, const std::vector<ncnn::Mat>& top_shapes, void (*func)(T*), int flag)
 {
@@ -715,7 +708,6 @@ int test_layer_gpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<n
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 template<typename T>
 int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn::Mat>& weights, const ncnn::Option& _opt, const std::vector<ncnn::Mat>& a, int top_blob_count, const std::vector<ncnn::Mat>& top_shapes = std::vector<ncnn::Mat>(), float epsilon = 0.001, void (*func)(T*) = 0, int flag = 0)
@@ -753,7 +745,6 @@ int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn:
         }
     }
 
-#if NCNN_VULKAN
     // gpu
     if (!(flag & TEST_LAYER_DISABLE_GPU_TESTING))
     {
@@ -777,7 +768,6 @@ int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn:
             return -1;
         }
     }
-#endif // NCNN_VULKAN
 
     return 0;
 }
@@ -968,7 +958,6 @@ int test_layer_cpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<n
     return 0;
 }
 
-#if NCNN_VULKAN
 template<typename T>
 int test_layer_gpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn::Mat>& weights, const ncnn::Option& _opt, const ncnn::Mat& a, ncnn::Mat& d, const ncnn::Mat& top_shape, void (*func)(T*), int flag)
 {
@@ -1110,7 +1099,6 @@ int test_layer_gpu(int typeindex, const ncnn::ParamDict& pd, const std::vector<n
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 template<typename T>
 int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn::Mat>& weights, const ncnn::Option& _opt, const ncnn::Mat& a, const ncnn::Mat& top_shape = ncnn::Mat(), float epsilon = 0.001, void (*func)(T*) = 0, int flag = 0)
@@ -1148,7 +1136,6 @@ int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn:
         }
     }
 
-#if NCNN_VULKAN
     // gpu
     if (!(flag & TEST_LAYER_DISABLE_GPU_TESTING))
     {
@@ -1172,7 +1159,6 @@ int test_layer(int typeindex, const ncnn::ParamDict& pd, const std::vector<ncnn:
             return -1;
         }
     }
-#endif // NCNN_VULKAN
 
     return 0;
 }

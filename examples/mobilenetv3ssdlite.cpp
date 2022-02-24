@@ -24,15 +24,15 @@
 #endif
 #include <stdio.h>
 #include <vector>
-#if NCNN_VULKAN
+
 #include "gpu.h"
-#endif // NCNN_VULKAN
 
 template<class T>
 const T& clamp(const T& v, const T& lo, const T& hi)
 {
     assert(!(hi < lo));
-    return v < lo ? lo : hi < v ? hi : v;
+    return v < lo ? lo : hi < v ? hi
+                                : v;
 }
 
 struct Object
@@ -46,9 +46,7 @@ static int detect_mobilenetv3(const cv::Mat& bgr, std::vector<Object>& objects)
 {
     ncnn::Net mobilenetv3;
 
-#if NCNN_VULKAN
     mobilenetv3.opt.use_vulkan_compute = true;
-#endif // NCNN_VULKAN
 
     // converted ncnn model from https://github.com/ujsyehao/mobilenetv3-ssd
     mobilenetv3.load_param("./mobilenetv3_ssdlite_voc.param");
@@ -106,8 +104,7 @@ static void draw_objects(const cv::Mat& bgr, const std::vector<Object>& objects)
                                         "bottle", "bus", "car", "cat", "chair",
                                         "cow", "diningtable", "dog", "horse",
                                         "motorbike", "person", "pottedplant",
-                                        "sheep", "sofa", "train", "tvmonitor"
-                                       };
+                                        "sheep", "sofa", "train", "tvmonitor"};
 
     cv::Mat image = bgr.clone();
 

@@ -145,7 +145,6 @@ static int test_cast_cpu_packed(const ncnn::Mat& a, int type_from, int type_to)
     return 0;
 }
 
-#if NCNN_VULKAN
 static int test_cast_gpu_fp16p(const ncnn::Mat& a, int type_from, int type_to)
 {
     if (type_to == 4 || type_from == 4)
@@ -611,20 +610,19 @@ static int test_cast_gpu_image_fp16p_pack8(const ncnn::Mat& a, int type_from, in
 
     return 0;
 }
-#endif // NCNN_VULKAN
 
 static int test_cast(const ncnn::Mat& a, int type_from, int type_to)
 {
     return 0
            || test_cast_cpu(a, type_from, type_to)
            || test_cast_cpu_packed(a, type_from, type_to)
-#if NCNN_VULKAN
+
            || test_cast_gpu_fp16p(a, type_from, type_to)
            || test_cast_gpu_fp16p_pack8(a, type_from, type_to)
            || test_cast_gpu_image_fp16p(a, type_from, type_to)
            || test_cast_gpu_image_fp16p_pack8(a, type_from, type_to)
-#endif // NCNN_VULKAN
-           ;
+
+        ;
 }
 
 static int test_cast_0()

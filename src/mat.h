@@ -39,9 +39,7 @@
 #include "option.h"
 #include "platform.h"
 
-#if NCNN_VULKAN
 #include <vulkan/vulkan.h>
-#endif // NCNN_VULKAN
 
 #if NCNN_PIXEL
 #if NCNN_PLATFORM_API
@@ -54,10 +52,8 @@
 
 namespace ncnn {
 
-#if NCNN_VULKAN
 class VkMat;
 class VkImageMat;
-#endif // NCNN_VULKAN
 
 // the three dimension matrix
 class NCNN_EXPORT Mat
@@ -163,12 +159,12 @@ public:
     void create(int w, int h, int d, int c, size_t elemsize, int elempack, Allocator* allocator = 0);
     // allocate like
     void create_like(const Mat& m, Allocator* allocator = 0);
-#if NCNN_VULKAN
+
     // allocate like
     void create_like(const VkMat& m, Allocator* allocator = 0);
     // allocate like
     void create_like(const VkImageMat& im, Allocator* allocator = 0);
-#endif // NCNN_VULKAN
+
     // refcount++
     void addref();
     // refcount--
@@ -334,8 +330,6 @@ public:
 
     size_t cstep;
 };
-
-#if NCNN_VULKAN
 
 // the three dimension matrix, vulkan version
 class NCNN_EXPORT VkMat
@@ -600,7 +594,6 @@ union vk_constant_type
     int i;
     float f;
 };
-#endif // NCNN_VULKAN
 
 // misc function
 #if NCNN_PIXEL
@@ -920,10 +913,10 @@ NCNN_FORCEINLINE void Mat::fill(float _v)
             "st1        {%4.4s}, [%1], #16  \n"
             "bne        0b                  \n"
             : "=r"(nn), // %0
-            "=r"(ptr) // %1
+              "=r"(ptr) // %1
             : "0"(nn),
-            "1"(ptr),
-            "w"(_c) // %4
+              "1"(ptr),
+              "w"(_c) // %4
             : "cc", "memory");
     }
 #else
@@ -935,10 +928,10 @@ NCNN_FORCEINLINE void Mat::fill(float _v)
             "vst1.f32   {%e4-%f4}, [%1 :128]!\n"
             "bne        0b                  \n"
             : "=r"(nn), // %0
-            "=r"(ptr) // %1
+              "=r"(ptr) // %1
             : "0"(nn),
-            "1"(ptr),
-            "w"(_c) // %4
+              "1"(ptr),
+              "w"(_c) // %4
             : "cc", "memory");
     }
 #endif // __aarch64__
@@ -972,10 +965,10 @@ NCNN_FORCEINLINE void Mat::fill(int _v)
             "st1        {%4.4s}, [%1], #16  \n"
             "bne        0b                  \n"
             : "=r"(nn), // %0
-            "=r"(ptr) // %1
+              "=r"(ptr) // %1
             : "0"(nn),
-            "1"(ptr),
-            "w"(_c) // %4
+              "1"(ptr),
+              "w"(_c) // %4
             : "cc", "memory");
     }
 #else
@@ -987,10 +980,10 @@ NCNN_FORCEINLINE void Mat::fill(int _v)
             "vst1.s32   {%e4-%f4}, [%1 :128]!\n"
             "bne        0b                  \n"
             : "=r"(nn), // %0
-            "=r"(ptr) // %1
+              "=r"(ptr) // %1
             : "0"(nn),
-            "1"(ptr),
-            "w"(_c) // %4
+              "1"(ptr),
+              "w"(_c) // %4
             : "cc", "memory");
     }
 #endif // __aarch64__
@@ -1383,8 +1376,6 @@ NCNN_FORCEINLINE const float& Mat::operator[](size_t i) const
 {
     return ((const float*)data)[i];
 }
-
-#if NCNN_VULKAN
 
 NCNN_FORCEINLINE VkMat::VkMat()
     : data(0), refcount(0), elemsize(0), elempack(0), allocator(0), dims(0), w(0), h(0), d(0), c(0), cstep(0)
@@ -1856,8 +1847,6 @@ NCNN_FORCEINLINE VkImageView VkImageMat::imageview() const
 {
     return data->imageview;
 }
-
-#endif // NCNN_VULKAN
 
 } // namespace ncnn
 
