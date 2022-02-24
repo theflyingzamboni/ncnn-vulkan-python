@@ -166,19 +166,11 @@ void ncnn_option_set_num_threads(ncnn_option_t opt, int num_threads)
 int ncnn_option_get_use_vulkan_compute(const ncnn_option_t opt)
 {
     return ((const Option*)opt)->use_vulkan_compute;
-#else
-(void)opt;
-return 0;
-#endif
 }
 
 void ncnn_option_set_use_vulkan_compute(ncnn_option_t opt, int use_vulkan_compute)
 {
     ((Option*)opt)->use_vulkan_compute = use_vulkan_compute;
-#else
-    (void)opt;
-    (void)use_vulkan_compute;
-#endif
 }
 
 /* mat api */
