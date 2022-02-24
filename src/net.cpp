@@ -2511,8 +2511,6 @@ int Extractor::extract(int blob_index, Mat& feat, int type)
         {
             ret = d->net->d->forward_layer(layer_index, d->blob_mats, d->opt);
         }
-#else
-        ret = d->net->d->forward_layer(layer_index, d->blob_mats, d->opt);
     }
 
     feat = d->blob_mats[blob_index];
