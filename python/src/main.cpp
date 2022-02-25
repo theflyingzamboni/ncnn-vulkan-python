@@ -932,9 +932,9 @@ PYBIND11_MODULE(ncnn, m)
         .def("record_clone", py::overload_cast<const VkMat&, VkMat&, const Option&>(&VkCompute::record_clone))
         .def("record_clone", py::overload_cast<const VkImageMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
         .def("record_clone", py::overload_cast<const VkMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkImageMat&, VkMat&, const Option&>(&VkCompute::record_clone))
+        .def("record_clone", py::overload_cast<const VkImageMat&, VkMat&, const Option&>(&VkCompute::record_clone));
 
-            py::class_<Extractor>(m, "Extractor")
+    py::class_<Extractor>(m, "Extractor")
         .def("__enter__", [](Extractor& ex) -> Extractor& { return ex; })
         .def("__exit__", [](Extractor& ex, pybind11::args) {
             ex.clear();
