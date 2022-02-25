@@ -24,7 +24,9 @@
 #include <option.h>
 #include <blob.h>
 #include <paramdict.h>
+#include <mat.h>
 #include <command.h>
+#include <pipeline.h>
 
 #include "pybind11_mat.h"
 #include "pybind11_datareader.h"
@@ -911,7 +913,7 @@ PYBIND11_MODULE(ncnn, m)
         .value("PIXEL_BGRA2RGBA", ncnn::Mat::PixelType::PIXEL_BGRA2RGBA);
 
     py::class_<VkCompute>(m, "VkCompute")
-        .def(py::init<const VulkanDevice*>(), py::arg("device"))
+        .def(py::init<const VulkanDevice*>())
         .def("__enter__", [](VkCompute& cmd) -> VkCompute& { return cmd; })
         .def("__exit__", [](VkCompute& cmd, pybind11::args) {
             cmd.reset();
