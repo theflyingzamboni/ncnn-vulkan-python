@@ -24,6 +24,7 @@
 #include <option.h>
 #include <blob.h>
 #include <paramdict.h>
+#include <command.h>
 
 #include "pybind11_mat.h"
 #include "pybind11_datareader.h"
