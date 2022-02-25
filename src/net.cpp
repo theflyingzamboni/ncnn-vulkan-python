@@ -2313,14 +2313,33 @@ void Extractor::set_num_threads(int num_threads)
     d->opt.num_threads = num_threads;
 }
 
-void Extractor::set_blob_allocator(Allocator* allocator)
+// Modified to support vulkan, for some reason the actual vk methods aren't exposed to python
+void Extractor::set_blob_allocator(VkAllocator* allocator)
 {
-    d->opt.blob_allocator = allocator;
+    if (d->net->d->opt.use_vulkan_compute)
+    {
+        d->opt.blob_vkallocator = allocator;
+        d->opt.staging_vkallocator = allocator;
+    }
+    else
+    {
+        d->opt.blob_allocator = allocator;
+    }
 }
 
-void Extractor::set_workspace_allocator(Allocator* allocator)
+// Modified to support vulkan, for some reason the actual vk methods aren't exposed to python
+void Extractor::set_workspace_allocator(VkAllocator* allocator)
 {
-    d->opt.workspace_allocator = allocator;
+    if (d->net->d->opt.use_vulkan_compute)
+    {
+        // Actually using this to set staging one
+        // d->opt.workspace_vkallocator = allocator;
+        d->opt.staging_vkallocator = allocator;
+    }
+    else
+    {
+        d->opt.workspace_allocator = allocator;
+    }
 }
 
 void Extractor::set_vulkan_compute(bool enable)
