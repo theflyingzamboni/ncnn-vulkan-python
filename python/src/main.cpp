@@ -910,7 +910,7 @@ PYBIND11_MODULE(ncnn, m)
         .value("PIXEL_BGRA2RGBA", ncnn::Mat::PixelType::PIXEL_BGRA2RGBA);
 
     py::class_<VkCompute>(m, "VkCompute")
-        .def(py::init<>(), py::arg("device"))
+        .def(py::init<const VulkanDevice*>(), py::arg("device"))
         .def("__enter__", [](VkCompute& cmd) -> VkCompute& { return cmd; })
         .def("__exit__", [](VkCompute& cmd, pybind11::args) {
             cmd.reset();
