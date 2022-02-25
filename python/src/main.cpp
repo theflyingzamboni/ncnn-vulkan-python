@@ -909,6 +909,17 @@ PYBIND11_MODULE(ncnn, m)
         .value("PIXEL_BGRA2GRAY", ncnn::Mat::PixelType::PIXEL_BGRA2GRAY)
         .value("PIXEL_BGRA2RGBA", ncnn::Mat::PixelType::PIXEL_BGRA2RGBA);
 
+    py::class_<VkCompute>(m, "VkCompute")
+        .def(py::init<>(), py::arg("device"))
+        .def("__enter__", [](VkCompute& cmd) -> VkCompute& { return cmd; })
+        .def("__exit__", [](VkCompute& cmd, pybind11::args) {
+            cmd.reset();
+        })
+        .def("reset", &VkCompute::reset)
+        .def("record_clone", &VkCompute::record_clone, py::arg("in"), py::arg("in_gpu"), py::arg("opt"))
+        .def("submit_and_wait", &VkCompute::submit_and_wait)
+        .def("record_pipeline", &VkCompute::record_pipeline, py::arg("pipeline"), py::arg("bindings"), py::arg("constants"), py::arg("dispatcher"));
+
     py::class_<Extractor>(m, "Extractor")
         .def("__enter__", [](Extractor& ex) -> Extractor& { return ex; })
         .def("__exit__", [](Extractor& ex, pybind11::args) {
