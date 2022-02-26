@@ -101,6 +101,13 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository_url: test.pypi.org
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
 
   # ubuntu:
   #   strategy:
