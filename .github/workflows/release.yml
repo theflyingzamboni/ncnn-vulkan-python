@@ -109,7 +109,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
           TWINE_REPOSITORY: testpypi
 
-  ubuntu:
+  linux:
     strategy:
       matrix:
         python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10' ]
@@ -129,8 +129,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libvulkan-dev glslang-dev glslang-tools
-          pip install build twine
+          sudo apt-get install -y libvulkan-dev glslang-dev glslang-tools patchelf
+          pip install build twine auditwheel
       - name: Build
         run: |
           mkdir -p build
@@ -140,6 +140,9 @@ jobs:
           make install
           cd ..
           python -m build -w .
+      - name: Repair linux wheel
+        run: |
+          auditwheel repair dist/*-linux_x86_64.whl -w . --plat manylinux_2_24_x86_64
       - name: Package
         run: |
           mkdir -p ${{ env.PACKAGENAME }}
@@ -155,40 +158,9 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
-
-  linux:
-    strategy:
-      matrix:
-        python-version: [ '3.10' ]
-    needs: [setup, create-release]
-    runs-on: ubuntu-latest
-    env:
-      PACKAGENAME: ${{ needs.setup.outputs.APPNAME }}-${{ needs.setup.outputs.VERSION }}-ubuntu
-      DEBIAN_FRONTEND: noninteractive
-    steps:      
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      # - name: Install dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libvulkan-dev glslang-dev glslang-tools
-      #     pip install build twine
-      - name: Build manylinux Python wheels
-        uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64
-        with:
-          pre-build-command: 'mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DNCNN_VULKAN=ON -DNCNN_SYSTEM_GLSLANG=ON -DNCNN_BUILD_EXAMPLES=ON .. && make && make install && cd ..'
-          python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310'
-          build-requirements: 'opencv-python build twine cmake cmake-build-extension'
-          system-packages: 'libvulkan-dev glslang-dev glslang-tools'
-          pip-wheel-args: '-w .'
       - name: Upload to TestPyPI
         run: |
-          python3 -m twine upload dist/*-manylinux*.whl
+          python3 -m twine upload dist/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
