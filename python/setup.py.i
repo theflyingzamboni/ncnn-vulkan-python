@@ -19,7 +19,7 @@ if sys.version_info < (3, 0):
 requirements = ["numpy", "tqdm", "requests", "portalocker", "opencv-python"]
 
 setup(
-    name="ncnn",
+    name="ncnn_vulkan",
     version="${PACKAGE_VERSION}",
     author="nihui",
     author_email="nihuini@tencent.com",
@@ -42,7 +42,7 @@ setup(
     python_requires=">=3.5",
     packages=find_packages(),
     package_dir={"": "."},
-    package_data={"ncnn": ["ncnn${PYTHON_MODULE_PREFIX}${PYTHON_MODULE_EXTENSION}"]},
+    package_data={"ncnn_vulkan": ["ncnn_vulkan${PYTHON_MODULE_PREFIX}${PYTHON_MODULE_EXTENSION}"]},
     install_requires=requirements,
     cmdclass={"bdist_wheel": bdist_wheel},
 )

@@ -50,7 +50,7 @@ class CMakeBuild(build_ext):
     def build_extension(self, ext):
         extdir = os.path.abspath(os.path.dirname(
             self.get_ext_fullpath(ext.name)))
-        extdir = os.path.join(extdir, "ncnn")
+        extdir = os.path.join(extdir, "ncnn_vulkan")
 
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
@@ -158,6 +158,6 @@ setup(
     packages=find_packages("python"),
     package_dir={"": "python"},
     install_requires=requirements,
-    ext_modules=[CMakeExtension("ncnn")],
+    ext_modules=[CMakeExtension("ncnn_vulkan")],
     cmdclass={"build_ext": CMakeBuild},
 )
