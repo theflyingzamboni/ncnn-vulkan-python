@@ -17,11 +17,7 @@ def find_version():
     version_minor = re.findall(r"NCNN_VERSION_MINOR (.+?)", version_file)
 
     if version_major and version_minor:
-        if sys.platform == "darwin":
-            ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
-        else:
-            ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
-
+        ncnn_version = time.strftime("1.%Y%m%d.%H%M%S", time.localtime())
         # return version_major[0] + "." + version_minor[0] + "." + ncnn_version
         return ncnn_version
     raise RuntimeError("Unable to find version string.")
