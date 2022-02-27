@@ -8,7 +8,7 @@ Also in this fork, failed vram allocation will result in a runtime error that is
 
 ```py
 import cv2
-import ncnn_vulkan as ncnn
+from ncnn_vulkan import ncnn
 import numpy as np
 
 net = ncnn.Net()
