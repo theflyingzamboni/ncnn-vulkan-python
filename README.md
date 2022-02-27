@@ -1,5 +1,62 @@
+# ncnn-vulkan
+
+This fork aims to provide vulkan functionality to the ncnn python bindings, which is absent in the official package. All that is needed to use vulkan is the addition of `net.opt.use_vulkan_compute = True`.
+
+Also in this fork, failed vram allocation will result in a runtime error that is catchable, allowing you to clear the allocated vram on this error by using `ncnn.destroy_gpu_instance()`.
+
+### Minimal example:
+
+```py
+import cv2
+import ncnn_vulkan as ncnn
+import numpy as np
+
+net = ncnn.Net()
+
+# Use vulkan compute
+net.opt.use_vulkan_compute = True
+
+# Load model param and bin
+net.load_param("./x4.param")
+net.load_model("./x4.bin")
+
+ex = net.create_extractor()
+
+# Load image using opencv
+img = cv2.imread("./example.jpg")
+
+# Convert image to ncnn Mat
+mat_in = ncnn.Mat.from_pixels(
+    img,
+    ncnn.Mat.PixelType.PIXEL_BGR,
+    img.shape[1],
+    img.shape[0]
+)
+
+# Normalize image (required)
+# Note that passing in a normalized numpy array will not work.
+mean_vals = []
+norm_vals = [1 / 255.0, 1 / 255.0, 1 / 255.0]
+mat_in.substract_mean_normalize(mean_vals, norm_vals)
+
+# Try/except block to catch out-of-memory error
+try:
+    # Make sure the input and output names match the param file
+    ex.input("data", mat_in)
+    ret, mat_out = ex.extract("output")
+    out = np.array(mat_out)
+
+    # Transpose the output from `c, h, w` to `h, w, c` and put it back in 0-255 range
+    output = out.transpose(1, 2, 0) * 255
+
+    # Save image using opencv
+    cv2.imwrite('./out.png', output)
+except:
+    ncnn.destroy_gpu_instance()
+```
+
 ![](https://raw.githubusercontent.com/Tencent/ncnn/master/images/256-ncnn.png)
-# ncnn
+# original readme
 
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](https://raw.githubusercontent.com/Tencent/ncnn/master/LICENSE.txt)
 [![download](https://img.shields.io/github/downloads/Tencent/ncnn/total.svg)](https://github.com/Tencent/ncnn/releases)

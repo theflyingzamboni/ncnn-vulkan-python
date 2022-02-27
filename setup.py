@@ -20,7 +20,7 @@ def find_version():
         if sys.platform == "darwin":
             ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
         else:
-            ncnn_version = time.strftime("%Y%m%d", time.localtime())
+            ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
 
         return version_major[0] + "." + version_minor[0] + "." + ncnn_version
     raise RuntimeError("Unable to find version string.")
@@ -49,7 +49,7 @@ class CMakeBuild(build_ext):
     def build_extension(self, ext):
         extdir = os.path.abspath(os.path.dirname(
             self.get_ext_fullpath(ext.name)))
-        extdir = os.path.join(extdir, "ncnn")
+        extdir = os.path.join(extdir, "ncnn-vulkan")
 
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
@@ -131,7 +131,7 @@ with io.open("README.md", encoding="utf-8") as h:
     long_description = h.read()
 
 setup(
-    name="ncnn",
+    name="ncnn-vulkan",
     version=find_version(),
     author="nihui",
     author_email="nihuini@tencent.com",
@@ -140,7 +140,7 @@ setup(
     description="ncnn is a high-performance neural network inference framework optimized for the mobile platform",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Tencent/ncnn",
+    url="https://github.com/joeyballentine/ncnn-vulkan",
     classifiers=[
         "Programming Language :: C++",
         "Programming Language :: Python :: 3",
@@ -157,6 +157,6 @@ setup(
     packages=find_packages("python"),
     package_dir={"": "python"},
     install_requires=requirements,
-    ext_modules=[CMakeExtension("ncnn")],
+    ext_modules=[CMakeExtension("ncnn-vulkan")],
     cmdclass={"build_ext": CMakeBuild},
 )
