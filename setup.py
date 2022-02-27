@@ -22,7 +22,8 @@ def find_version():
         else:
             ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
 
-        return version_major[0] + "." + version_minor[0] + "." + ncnn_version
+        # return version_major[0] + "." + version_minor[0] + "." + ncnn_version
+        return ncnn_version
     raise RuntimeError("Unable to find version string.")
 
 
@@ -49,7 +50,7 @@ class CMakeBuild(build_ext):
     def build_extension(self, ext):
         extdir = os.path.abspath(os.path.dirname(
             self.get_ext_fullpath(ext.name)))
-        extdir = os.path.join(extdir, "ncnn-vulkan")
+        extdir = os.path.join(extdir, "ncnn")
 
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
@@ -131,7 +132,7 @@ with io.open("README.md", encoding="utf-8") as h:
     long_description = h.read()
 
 setup(
-    name="ncnn-vulkan",
+    name="ncnn_vulkan",
     version=find_version(),
     author="nihui",
     author_email="nihuini@tencent.com",
@@ -157,6 +158,6 @@ setup(
     packages=find_packages("python"),
     package_dir={"": "python"},
     install_requires=requirements,
-    ext_modules=[CMakeExtension("ncnn-vulkan")],
+    ext_modules=[CMakeExtension("ncnn")],
     cmdclass={"build_ext": CMakeBuild},
 )

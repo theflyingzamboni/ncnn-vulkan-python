@@ -160,7 +160,7 @@ ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架
 
 **[ncnn produce wrong result](https://github.com/Tencent/ncnn/wiki/FAQ-ncnn-produce-wrong-result)**
 
-**[ncnn vulkan](https://github.com/Tencent/ncnn/wiki/FAQ-ncnn-vulkan)**
+**[ncnn vulkan](https://github.com/Tencent/ncnn/wiki/FAQ-ncnn)**
 
 ---
 
