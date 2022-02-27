@@ -912,27 +912,27 @@ PYBIND11_MODULE(ncnn, m)
         .value("PIXEL_BGRA2GRAY", ncnn::Mat::PixelType::PIXEL_BGRA2GRAY)
         .value("PIXEL_BGRA2RGBA", ncnn::Mat::PixelType::PIXEL_BGRA2RGBA);
 
-    py::class_<VkCompute>(m, "VkCompute")
-        .def(py::init<const VulkanDevice*>(), py::arg("device"))
-        .def("__enter__", [](VkCompute& cmd) -> VkCompute& { return cmd; })
-        .def("__exit__", [](VkCompute& cmd, pybind11::args) {
-            cmd.reset();
-        })
-        .def("reset", &VkCompute::reset)
-        .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<vk_constant_type>&, const VkMat&>(&VkCompute::record_pipeline))
-        .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkImageMat&>(&VkCompute::record_pipeline))
-        .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkMat&>(&VkCompute::record_pipeline))
-        .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkImageMat&>(&VkCompute::record_pipeline))
-        .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const Mat&>(&VkCompute::record_pipeline))
-        .def("submit_and_wait", &VkCompute::submit_and_wait)
-        .def("record_clone", py::overload_cast<const Mat&, VkMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const Mat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkMat&, Mat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkImageMat&, Mat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkMat&, VkMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkImageMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
-        .def("record_clone", py::overload_cast<const VkImageMat&, VkMat&, const Option&>(&VkCompute::record_clone));
+    // py::class_<VkCompute>(m, "VkCompute")
+    //     .def(py::init<const VulkanDevice*>(), py::arg("device"))
+    //     .def("__enter__", [](VkCompute& cmd) -> VkCompute& { return cmd; })
+    //     .def("__exit__", [](VkCompute& cmd, pybind11::args) {
+    //         cmd.reset();
+    //     })
+    //     .def("reset", &VkCompute::reset)
+    //     .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<vk_constant_type>&, const VkMat&>(&VkCompute::record_pipeline))
+    //     .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkImageMat&>(&VkCompute::record_pipeline))
+    //     .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkMat&>(&VkCompute::record_pipeline))
+    //     .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const VkImageMat&>(&VkCompute::record_pipeline))
+    //     .def("record_pipeline", py::overload_cast<const Pipeline*, const std::vector<VkMat>&, const std::vector<VkImageMat>&, const std::vector<vk_constant_type>&, const Mat&>(&VkCompute::record_pipeline))
+    //     .def("submit_and_wait", &VkCompute::submit_and_wait)
+    //     .def("record_clone", py::overload_cast<const Mat&, VkMat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const Mat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkMat&, Mat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkImageMat&, Mat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkMat&, VkMat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkImageMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkMat&, VkImageMat&, const Option&>(&VkCompute::record_clone))
+    //     .def("record_clone", py::overload_cast<const VkImageMat&, VkMat&, const Option&>(&VkCompute::record_clone));
 
     py::class_<Extractor>(m, "Extractor")
         .def("__enter__", [](Extractor& ex) -> Extractor& { return ex; })
