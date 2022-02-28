@@ -155,14 +155,6 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
-      - name: Upload to TestPyPI
-        run: |
-          python3 -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          TWINE_REPOSITORY: testpypi
-
 
 
   ubuntu-1804:
@@ -232,6 +224,13 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
+      - name: Upload to TestPyPI
+        run: |
+          python3 -m twine upload dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+          TWINE_REPOSITORY: testpypi
 
   macos:
     needs: [setup, create-release]
