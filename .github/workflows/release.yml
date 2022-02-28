@@ -195,7 +195,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libvulkan-dev glslang-dev glslang-tools patchelf
+          sudo apt-get install -y patchelf
           pip install build twine auditwheel
       - name: Build
         run: |
