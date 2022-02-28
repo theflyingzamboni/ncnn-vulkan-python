@@ -194,6 +194,8 @@ jobs:
           find 1.2.162.0 -type f | grep -v -E 'vulkan|glslang' | xargs rm
       - name: Install dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y libvulkan-dev glslang-dev glslang-tools patchelf
           pip install build twine auditwheel
       - name: Build
         run: |
