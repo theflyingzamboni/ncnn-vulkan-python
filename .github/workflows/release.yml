@@ -109,7 +109,7 @@ jobs:
   #         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
   #         TWINE_REPOSITORY: pypi
 
-  ubuntu:
+  linux:
     strategy:
       matrix:
         python-version: ['3.8']
@@ -153,7 +153,7 @@ jobs:
           pip install twine
       - name: Upload to PyPI
         run: |
-          python3 -m twine upload dist/*
+          python3 -m twine upload dist/*manylinux2014_x86_64.whl
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
