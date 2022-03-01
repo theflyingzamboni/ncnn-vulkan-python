@@ -23,6 +23,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdexcept>
 
 #if NCNN_BENCHMARK
 #include "benchmark.h"
