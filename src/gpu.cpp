@@ -1475,35 +1475,42 @@ int create_gpu_instance()
 
 void destroy_gpu_instance()
 {
-    MutexLockGuard lock(g_instance_lock);
-
-    if ((VkInstance)g_instance == 0)
-        return;
-
-    // NCNN_LOGE("destroy_gpu_instance");
-
-    glslang::FinalizeProcess();
-
-    for (int i = 0; i < NCNN_MAX_GPU_COUNT; i++)
+    try
     {
-        delete g_default_vkdev[i];
-        g_default_vkdev[i] = 0;
+        MutexLockGuard lock(g_instance_lock);
 
-        delete g_gpu_infos[i];
-        g_gpu_infos[i] = 0;
-    }
+        if ((VkInstance)g_instance == 0)
+            return;
+
+        // NCNN_LOGE("destroy_gpu_instance");
+
+        glslang::FinalizeProcess();
+
+        for (int i = 0; i < NCNN_MAX_GPU_COUNT; i++)
+        {
+            delete g_default_vkdev[i];
+            g_default_vkdev[i] = 0;
+
+            delete g_gpu_infos[i];
+            g_gpu_infos[i] = 0;
+        }
 
 #if ENABLE_VALIDATION_LAYER
-    if (support_VK_EXT_debug_utils)
-    {
-        DestroyDebugUtilsMessengerEXT(g_instance, g_instance.callback, NULL);
-        g_instance.callback = 0;
-    }
+        if (support_VK_EXT_debug_utils)
+        {
+            DestroyDebugUtilsMessengerEXT(g_instance, g_instance.callback, NULL);
+            g_instance.callback = 0;
+        }
 #endif // ENABLE_VALIDATION_LAYER
 
-    vkDestroyInstance(g_instance, 0);
+        vkDestroyInstance(g_instance, 0);
 
-    g_instance.instance = 0;
+        g_instance.instance = 0;
+    }
+    catch (...)
+    {
+        throw std::runtime_error("Unknown error occurred when destroying GPU instance!")
+    }
 }
 
 static bool is_gpu_instance_ready()

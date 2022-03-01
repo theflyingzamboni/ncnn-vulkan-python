@@ -2285,21 +2285,28 @@ Extractor& Extractor::operator=(const Extractor& rhs)
 
 void Extractor::clear()
 {
-    d->blob_mats.clear();
-
-    if (d->opt.use_vulkan_compute)
+    try
     {
-        d->blob_mats_gpu.clear();
-        d->blob_mats_gpu_image.clear();
+        d->blob_mats.clear();
 
-        if (d->local_blob_vkallocator)
+        if (d->opt.use_vulkan_compute)
         {
-            d->net->vulkan_device()->reclaim_blob_allocator(d->local_blob_vkallocator);
+            d->blob_mats_gpu.clear();
+            d->blob_mats_gpu_image.clear();
+
+            if (d->local_blob_vkallocator)
+            {
+                d->net->vulkan_device()->reclaim_blob_allocator(d->local_blob_vkallocator);
+            }
+            if (d->local_staging_vkallocator)
+            {
+                d->net->vulkan_device()->reclaim_staging_allocator(d->local_staging_vkallocator);
+            }
         }
-        if (d->local_staging_vkallocator)
-        {
-            d->net->vulkan_device()->reclaim_staging_allocator(d->local_staging_vkallocator);
-        }
+    }
+    catch (...)
+    {
+        throw std::runtime_error("Unknown error occurred when clearing extractor!")
     }
 }
 
