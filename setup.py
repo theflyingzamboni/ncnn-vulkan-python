@@ -21,8 +21,7 @@ def find_version():
         # return version_major[0] + "." + version_minor[0] + "." + ncnn_version
 
         ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
-        # return ncnn_version
-        return "2022.2.29"
+        return ncnn_version
     raise RuntimeError("Unable to find version string.")
 
 
