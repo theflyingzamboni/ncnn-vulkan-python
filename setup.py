@@ -20,7 +20,7 @@ def find_version():
         # ncnn_version = time.strftime("1.%Y%m%d.%H%M%S", time.localtime())
         # return version_major[0] + "." + version_minor[0] + "." + ncnn_version
 
-        ncnn_version = time.strftime("%Y.%m.%d", time.localtime())
+        ncnn_version = time.strftime("%Y.%m.%d.2", time.localtime())
         return ncnn_version
     raise RuntimeError("Unable to find version string.")
 
