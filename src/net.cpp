@@ -2306,7 +2306,7 @@ void Extractor::clear()
     }
     catch (...)
     {
-        throw std::runtime_error("Unknown error occurred when clearing extractor!")
+        throw std::runtime_error("Unknown error occurred when clearing extractor!");
     }
 }
 
