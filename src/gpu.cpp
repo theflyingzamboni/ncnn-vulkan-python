@@ -1509,7 +1509,7 @@ void destroy_gpu_instance()
     }
     catch (...)
     {
-        throw std::runtime_error("Unknown error occurred when destroying GPU instance!")
+        throw std::runtime_error("Unknown error occurred when destroying GPU instance!");
     }
 }
 
