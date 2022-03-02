@@ -1444,21 +1444,21 @@ int create_gpu_instance()
             gpu_info.support_fp16_arithmetic = true;
         }
 
-        NCNN_LOGE("[%u %s]  queueC=%u[%u]  queueG=%u[%u]  queueT=%u[%u]", i, physicalDeviceProperties.deviceName,
-                  gpu_info.compute_queue_family_index, gpu_info.compute_queue_count,
-                  gpu_info.graphics_queue_family_index, gpu_info.graphics_queue_count,
-                  gpu_info.transfer_queue_family_index, gpu_info.transfer_queue_count);
+        // NCNN_LOGE("[%u %s]  queueC=%u[%u]  queueG=%u[%u]  queueT=%u[%u]", i, physicalDeviceProperties.deviceName,
+        //           gpu_info.compute_queue_family_index, gpu_info.compute_queue_count,
+        //           gpu_info.graphics_queue_family_index, gpu_info.graphics_queue_count,
+        //           gpu_info.transfer_queue_family_index, gpu_info.transfer_queue_count);
 
-        NCNN_LOGE("[%u %s]  bugsbn1=%d  bugbilz=%d  bugcopc=%d  bugihfa=%d", i, physicalDeviceProperties.deviceName,
-                  gpu_info.bug_storage_buffer_no_l1, gpu_info.bug_buffer_image_load_zero, gpu_info.bug_corrupted_online_pipeline_cache, gpu_info.bug_implicit_fp16_arithmetic);
+        // NCNN_LOGE("[%u %s]  bugsbn1=%d  bugbilz=%d  bugcopc=%d  bugihfa=%d", i, physicalDeviceProperties.deviceName,
+        //           gpu_info.bug_storage_buffer_no_l1, gpu_info.bug_buffer_image_load_zero, gpu_info.bug_corrupted_online_pipeline_cache, gpu_info.bug_implicit_fp16_arithmetic);
 
-        NCNN_LOGE("[%u %s]  fp16-p/s/a=%d/%d/%d  int8-p/s/a=%d/%d/%d", i, physicalDeviceProperties.deviceName,
-                  gpu_info.support_fp16_packed, gpu_info.support_fp16_storage, gpu_info.support_fp16_arithmetic,
-                  gpu_info.support_int8_packed, gpu_info.support_int8_storage, gpu_info.support_int8_arithmetic);
+        // NCNN_LOGE("[%u %s]  fp16-p/s/a=%d/%d/%d  int8-p/s/a=%d/%d/%d", i, physicalDeviceProperties.deviceName,
+        //           gpu_info.support_fp16_packed, gpu_info.support_fp16_storage, gpu_info.support_fp16_arithmetic,
+        //           gpu_info.support_int8_packed, gpu_info.support_int8_storage, gpu_info.support_int8_arithmetic);
 
-        NCNN_LOGE("[%u %s]  subgroup=%u  basic=%d  vote=%d  ballot=%d  shuffle=%d", i, physicalDeviceProperties.deviceName,
-                  gpu_info.subgroup_size, gpu_info.support_subgroup_basic, gpu_info.support_subgroup_vote,
-                  gpu_info.support_subgroup_ballot, gpu_info.support_subgroup_shuffle);
+        // NCNN_LOGE("[%u %s]  subgroup=%u  basic=%d  vote=%d  ballot=%d  shuffle=%d", i, physicalDeviceProperties.deviceName,
+        //           gpu_info.subgroup_size, gpu_info.support_subgroup_basic, gpu_info.support_subgroup_vote,
+        //           gpu_info.support_subgroup_ballot, gpu_info.support_subgroup_shuffle);
 
         gpu_info_index++;
     }

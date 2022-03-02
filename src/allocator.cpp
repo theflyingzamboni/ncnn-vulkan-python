@@ -381,7 +381,7 @@ VkBuffer VkAllocator::create_buffer(size_t size, VkBufferUsageFlags usage)
     VkResult ret = vkCreateBuffer(vkdev->vkdevice(), &bufferCreateInfo, 0, &buffer);
     if (ret != VK_SUCCESS)
     {
-        NCNN_LOGE("vkCreateBuffer failed %d", ret);
+        // NCNN_LOGE("vkCreateBuffer failed %d", ret);
         throw std::runtime_error("vkCreateBuffer failed");
         return 0;
     }
@@ -401,7 +401,7 @@ VkDeviceMemory VkAllocator::allocate_memory(size_t size, uint32_t memory_type_in
     VkResult ret = vkAllocateMemory(vkdev->vkdevice(), &memoryAllocateInfo, 0, &memory);
     if (ret != VK_SUCCESS)
     {
-        NCNN_LOGE("vkAllocateMemory failed %d", ret);
+        // NCNN_LOGE("vkAllocateMemory failed %d", ret);
         throw std::runtime_error("vkAllocateMemory failed");
         return 0;
     }
@@ -428,7 +428,7 @@ VkDeviceMemory VkAllocator::allocate_dedicated_memory(size_t size, uint32_t memo
     VkResult ret = vkAllocateMemory(vkdev->vkdevice(), &memoryAllocateInfo, 0, &memory);
     if (ret != VK_SUCCESS)
     {
-        NCNN_LOGE("vkAllocateMemory failed %d", ret);
+        // NCNN_LOGE("vkAllocateMemory failed %d", ret);
         throw std::runtime_error("vkAllocateMemory failed");
         return 0;
     }
@@ -1904,7 +1904,7 @@ VkImageMemory* VkAndroidHardwareBufferImageAllocator::fastMalloc(int /*w*/, int 
     ret = vkAllocateMemory(vkdev->vkdevice(), &memoryAllocateInfo, 0, &memory);
     if (ret != VK_SUCCESS)
     {
-        NCNN_LOGE("vkAllocateMemory failed %d", ret);
+        // NCNN_LOGE("vkAllocateMemory failed %d", ret);
         throw std::runtime_error("vkAllocateMemory failed");
         return 0;
     }
