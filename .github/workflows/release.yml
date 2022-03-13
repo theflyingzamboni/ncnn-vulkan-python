@@ -21,7 +21,7 @@ jobs:
   create-release:
     needs:
       - setup
-    name: Create Relase
+    name: Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -101,13 +101,13 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
-      - name: Upload to PyPI
-        run: |
-          python3 -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          TWINE_REPOSITORY: pypi
+      # - name: Upload to PyPI
+      #   run: |
+      #     python3 -m twine upload dist/*
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      #     TWINE_REPOSITORY: pypi
 
   linux:
     strategy:
@@ -148,16 +148,16 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
-      - name: Install twine
-        run: |
-          pip install twine
-      - name: Upload to PyPI
-        run: |
-          python3 -m twine upload dist/*manylinux2014_x86_64.whl
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          TWINE_REPOSITORY: pypi
+      # - name: Install twine
+      #   run: |
+      #     pip install twine
+      # - name: Upload to PyPI
+      #   run: |
+      #     python3 -m twine upload dist/*manylinux2014_x86_64.whl
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      #     TWINE_REPOSITORY: pypi
 
   macos:
     needs: [setup, create-release]
@@ -225,10 +225,10 @@ jobs:
           asset_path: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_name: ${{ env.PACKAGENAME }}_${{ matrix.python-version }}.zip
           asset_content_type: application/zip
-      - name: Upload to PyPI
-        run: |
-          python3 -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          TWINE_REPOSITORY: pypi
+      # - name: Upload to PyPI
+      #   run: |
+      #     python3 -m twine upload dist/*
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      #     TWINE_REPOSITORY: pypi
