@@ -6,6 +6,8 @@ on:
 
 jobs:
   setup:
+    permissions:
+      contents: none
     runs-on: ubuntu-latest
     outputs:
       APPNAME: ${{ steps.get_appname.outputs.APPNAME }}

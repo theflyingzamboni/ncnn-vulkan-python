@@ -81,8 +81,6 @@ static int deconvolutiondepthwise3d(const Mat& bottom_blob, Mat& top_blob, const
     const int outh = top_blob.h;
     const int outch = top_blob.c;
 
-    const int bias_term = bias_data.empty() ? 0 : 1;
-
     const int maxk = kernel_w * kernel_h * kernel_d;
 
     // kernel offsets
@@ -119,7 +117,7 @@ static int deconvolutiondepthwise3d(const Mat& bottom_blob, Mat& top_blob, const
             const float* kptr = (const float*)weight_data + maxk * g;
             Mat out = top_blob.channel(g);
 
-            const float bias = bias_term ? bias_data[g] : 0.f;
+            const float bias = bias_data.empty() ? 0.f : bias_data[g];
 
             out.fill(bias);
 
@@ -178,7 +176,8 @@ static int deconvolutiondepthwise3d(const Mat& bottom_blob, Mat& top_blob, const
                 Mat out = top_blob.channel(g * outch_g + p);
 
                 const float* weight_data_ptr = (const float*)weight_data + maxk * inch_g * outch_g * g;
-                const float bias = bias_term ? bias_data[g * outch_g + p] : 0.f;
+
+                const float bias = bias_data.empty() ? 0.f : bias_data[g * outch_g + p];
 
                 out.fill(bias);
 

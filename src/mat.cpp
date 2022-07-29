@@ -242,13 +242,17 @@ void Mat::create(int _w, size_t _elemsize, Allocator* _allocator)
 
     cstep = w;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -273,13 +277,17 @@ void Mat::create(int _w, int _h, size_t _elemsize, Allocator* _allocator)
 
     cstep = (size_t)w * h;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -304,13 +312,17 @@ void Mat::create(int _w, int _h, int _c, size_t _elemsize, Allocator* _allocator
 
     cstep = alignSize((size_t)w * h * elemsize, 16) / elemsize;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -335,13 +347,17 @@ void Mat::create(int _w, int _h, int _d, int _c, size_t _elemsize, Allocator* _a
 
     cstep = alignSize((size_t)w * h * d * elemsize, 16) / elemsize;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -366,13 +382,17 @@ void Mat::create(int _w, size_t _elemsize, int _elempack, Allocator* _allocator)
 
     cstep = w;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -397,13 +417,17 @@ void Mat::create(int _w, int _h, size_t _elemsize, int _elempack, Allocator* _al
 
     cstep = (size_t)w * h;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -428,13 +452,17 @@ void Mat::create(int _w, int _h, int _c, size_t _elemsize, int _elempack, Alloca
 
     cstep = alignSize((size_t)w * h * elemsize, 16) / elemsize;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -459,13 +487,17 @@ void Mat::create(int _w, int _h, int _d, int _c, size_t _elemsize, int _elempack
 
     cstep = alignSize((size_t)w * h * d * elemsize, 16) / elemsize;
 
-    if (total() > 0)
+    size_t totalsize = alignSize(total() * elemsize, 4);
+    if (totalsize > 0)
     {
-        size_t totalsize = alignSize(total() * elemsize, 4);
         if (allocator)
             data = allocator->fastMalloc(totalsize + (int)sizeof(*refcount));
         else
             data = fastMalloc(totalsize + (int)sizeof(*refcount));
+    }
+
+    if (data)
+    {
         refcount = (int*)(((unsigned char*)data) + totalsize);
         *refcount = 1;
     }
@@ -534,7 +566,10 @@ void VkMat::create(int _w, size_t _elemsize, VkAllocator* _allocator)
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -564,7 +599,10 @@ void VkMat::create(int _w, int _h, size_t _elemsize, VkAllocator* _allocator)
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -594,7 +632,10 @@ void VkMat::create(int _w, int _h, int _c, size_t _elemsize, VkAllocator* _alloc
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -624,7 +665,10 @@ void VkMat::create(int _w, int _h, int _d, int _c, size_t _elemsize, VkAllocator
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -654,7 +698,10 @@ void VkMat::create(int _w, size_t _elemsize, int _elempack, VkAllocator* _alloca
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -684,7 +731,10 @@ void VkMat::create(int _w, int _h, size_t _elemsize, int _elempack, VkAllocator*
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -714,7 +764,10 @@ void VkMat::create(int _w, int _h, int _c, size_t _elemsize, int _elempack, VkAl
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -744,7 +797,10 @@ void VkMat::create(int _w, int _h, int _d, int _c, size_t _elemsize, int _elempa
         size_t totalsize = alignSize(total() * elemsize, 4);
 
         data = allocator->fastMalloc(totalsize);
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkBufferMemory, refcount));
         *refcount = 1;
     }
@@ -809,9 +865,10 @@ void VkImageMat::create(int _w, size_t _elemsize, VkAllocator* _allocator)
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -837,9 +894,10 @@ void VkImageMat::create(int _w, int _h, size_t _elemsize, VkAllocator* _allocato
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -865,9 +923,10 @@ void VkImageMat::create(int _w, int _h, int _c, size_t _elemsize, VkAllocator* _
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -894,9 +953,10 @@ void VkImageMat::create(int _w, int _h, int _d, int _c, size_t _elemsize, VkAllo
     {
         // underlying image is 3d
         data = allocator->fastMalloc(w, h * d, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -922,9 +982,10 @@ void VkImageMat::create(int _w, size_t _elemsize, int _elempack, VkAllocator* _a
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -950,9 +1011,10 @@ void VkImageMat::create(int _w, int _h, size_t _elemsize, int _elempack, VkAlloc
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -978,9 +1040,10 @@ void VkImageMat::create(int _w, int _h, int _c, size_t _elemsize, int _elempack,
     if (total() > 0)
     {
         data = allocator->fastMalloc(w, h, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -1007,9 +1070,10 @@ void VkImageMat::create(int _w, int _h, int _d, int _c, size_t _elemsize, int _e
     {
         // underlying image is 3d
         data = allocator->fastMalloc(w, h * d, c, elemsize, elempack);
-        if (!data)
-            return;
+    }
 
+    if (data)
+    {
         refcount = (int*)((unsigned char*)data + offsetof(VkImageMemory, refcount));
         *refcount = 1;
     }
@@ -1175,7 +1239,7 @@ Mat Mat::from_float16(const unsigned short* data, int size)
         asm volatile(
             "0:                             \n"
             "pld        [%1, #64]           \n"
-            "vld1.s16   {d0}, [%1 :64]!     \n"
+            "vld1.s16   {d0}, [%1]!         \n"
             "vcvt.f32.f16 q1, d0            \n"
             "subs       %0, #1              \n"
             "vst1.f32   {d2-d3}, [%2 :128]! \n"

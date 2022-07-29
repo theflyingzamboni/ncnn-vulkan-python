@@ -69,8 +69,8 @@ ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架
 
 ---
 
-### 技术交流QQ群：637093648(超多大佬)  答案：卷卷卷卷卷
-### Pocky群（MLIR YES!）: 677104663(超多大佬)   答案：multi-level intermediate representation
+### 技术交流QQ群：637093648(超多大佬)  答案：卷卷卷卷卷 （已满）
+### Pocky QQ群（MLIR YES!）: 677104663(超多大佬)   答案：multi-level intermediate representation
 
 ### Telegram Group https://t.me/ncnnyes
 
@@ -87,9 +87,9 @@ ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架
 | Linux (ARM) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-arm-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-arm-cpu-gcc) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-aarch64-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-aarch64-cpu-gcc) | — | — |
 | Linux (MIPS) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-mips-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-mips-cpu-gcc) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-mips64-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-mips64-cpu-gcc) | — | — |
 | Linux (RISC-V) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-riscv64-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-riscv64-cpu-gcc) | — | — |
-| Windows (VS2015) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x86-cpu-vs2015)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x86-cpu-vs2015) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-cpu-vs2015)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-cpu-vs2015) | — | — |
-| Windows (VS2017) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x86-cpu-vs2017)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x86-cpu-vs2017) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-cpu-vs2017)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-cpu-vs2017) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-gpu-vs2017)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-gpu-vs2017) |
-| Windows (VS2019) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x86-cpu-vs2019)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x86-cpu-vs2019) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-cpu-vs2019)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-cpu-vs2019) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-gpu-vs2019)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-gpu-vs2019) |
+| Linux (LoongArch) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/linux-loongarch64-cpu-gcc)](https://github.com/Tencent/ncnn/actions?query=workflow%3Alinux-loongarch64-cpu-gcc) | — | — |
+| Windows | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x86-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x86-cpu) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-cpu) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-x64-gpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-x64-gpu) |
+| Windows (ARM) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-arm-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-arm-cpu) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/windows-arm64-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Awindows-arm64-cpu) | — | — |
 | macOS | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/macos-x64-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Amacos-x64-cpu) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/macos-x64-gpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Amacos-x64-gpu) |
 | macOS (ARM) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/macos-arm64-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Amacos-arm64-cpu) | — | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/macos-arm64-gpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Amacos-arm64-gpu) |
 | Android | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/android-armv7-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Aandroid-armv7-cpu) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/android-armv8-cpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Aandroid-armv8-cpu) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/android-armv7-gpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Aandroid-armv7-gpu) | [![Build Status](https://img.shields.io/github/workflow/status/Tencent/ncnn/android-armv8-gpu)](https://github.com/Tencent/ncnn/actions?query=workflow%3Aandroid-armv8-gpu) |
@@ -110,7 +110,7 @@ ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架
 * Face Detection: [MTCNN](https://github.com/ipazc/mtcnn) [RetinaFace](https://github.com/biubug6/Pytorch_Retinaface) [scrfd](https://github.com/nihui/ncnn-android-scrfd) ...
 * Detection: [VGG-SSD](https://github.com/lzx1413/CAFFE_SSD) [MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) [SqueezeNet-SSD](https://github.com/chuanqi305/SqueezeNet-SSD) [MobileNetV2-SSDLite](https://github.com/chuanqi305/MobileNetv2-SSDLite) [MobileNetV3-SSDLite](https://github.com/XiaoyuHuang96/MobilenetV3SSDLite-tfkeras) ...
 * Detection: [Faster-RCNN](https://github.com/rbgirshick/py-faster-rcnn) [R-FCN](https://github.com/daijifeng001/R-FCN) ...
-* Detection: [YOLOV2](https://github.com/longcw/yolo2-pytorch) [YOLOV3](https://github.com/ultralytics/yolov3) [MobileNet-YOLOV3](https://github.com/eric612/MobileNet-YOLO) [YOLOV4](https://github.com/Tianxiaomo/pytorch-YOLOv4) [YOLOV5](https://github.com/ultralytics/yolov5) [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) ...
+* Detection: [YOLOv2](https://github.com/longcw/yolo2-pytorch) [YOLOv3](https://github.com/ultralytics/yolov3) [MobileNet-YOLOv3](https://github.com/eric612/MobileNet-YOLO) [YOLOv4](https://github.com/Tianxiaomo/pytorch-YOLOv4) [YOLOv5](https://github.com/ultralytics/yolov5) [YOLOv7](https://github.com/WongKinYiu/yolov7) [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) ...
 * Detection: [NanoDet](https://github.com/RangiLyu/nanodet)
 * Segmentation: [FCN](https://github.com/unsky/FPN) [PSPNet](https://github.com/hszhao/PSPNet) [UNet](https://github.com/zhixuhao/unet) [YOLACT](https://github.com/dbolya/yolact) ...
 * Pose Estimation: [SimplePose](https://github.com/dog-qiuqiu/Ultralight-SimplePose) ...
@@ -225,6 +225,7 @@ ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架
 * https://github.com/nihui/ncnn-android-mobilenetssd
 * https://github.com/moli232777144/mtcnn_ncnn
 * https://github.com/nihui/ncnn-android-yolov5
+* https://github.com/xiang-wuu/ncnn-android-yolov7
 * https://github.com/nihui/ncnn-android-scrfd 🤩
 
 <img src="https://github.com/nihui/ncnn-assets/raw/master/20181217/ncnn-2.jpg" width="360" height="640"/> <img src="https://github.com/nihui/ncnn-assets/raw/master/20181217/4.jpg" width="360" height="640"/>
