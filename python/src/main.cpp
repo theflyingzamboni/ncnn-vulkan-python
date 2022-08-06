@@ -1057,7 +1057,7 @@ PYBIND11_MODULE(ncnn, m)
 #endif // NCNN_STRING
         .def("load_param_bin", (int(Net::*)(const char*)) & Net::load_param_bin, py::arg("protopath"))
         .def("load_model", (int(Net::*)(const char*)) & Net::load_model, py::arg("modelpath"))
-        .def("load_model_mem", (int(Net::*)(const char*)) & Net::load_model, py::arg("mem").noconvert())
+        .def("load_model_mem", (int(Net::*)(const unsigned char*)) & Net::load_model, py::arg("mem").noconvert())
 #endif // NCNN_STDIO
 
         .def("clear", &Net::clear)
